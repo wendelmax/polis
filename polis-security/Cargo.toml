@@ -1,0 +1,21 @@
+[package]
+name = "polis-security"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+description = "Container security, sandboxing and isolation"
+
+[dependencies]
+polis-core = { path = "../polis-core" }
+
+tokio = { workspace = true }
+serde = { workspace = true }
+anyhow = { workspace = true }
+thiserror = { workspace = true }
+tracing = { workspace = true }
+nix = { workspace = true }
+libc = { workspace = true }
+cgroups = { workspace = true }
+

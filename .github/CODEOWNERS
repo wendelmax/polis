@@ -1,0 +1,46 @@
+# Global code owners
+* @polis-team
+
+# Core components
+/polis-core/ @polis-team @polis-core-team
+/polis-runtime/ @polis-team @polis-runtime-team
+/polis-api/ @polis-team @polis-api-team
+/polis-cli/ @polis-team @polis-cli-team
+
+# Feature components
+/polis-image/ @polis-team @polis-image-team
+/polis-network/ @polis-team @polis-network-team
+/polis-security/ @polis-team @polis-security-team
+/polis-storage/ @polis-team @polis-storage-team
+/polis-orchestrator/ @polis-team @polis-orchestrator-team
+/polis-monitor/ @polis-team @polis-monitor-team
+/polis-auth/ @polis-team @polis-auth-team
+
+# Development components
+/polis-benchmarks/ @polis-team @polis-benchmarks-team
+/polis-optimization/ @polis-team @polis-optimization-team
+/polis-sdk/ @polis-team @polis-sdk-team
+/polis-tests/ @polis-team @polis-tests-team
+
+# Documentation
+/docs/ @polis-team @polis-docs-team
+*.md @polis-team @polis-docs-team
+
+# Configuration files
+Cargo.toml @polis-team @polis-maintainers
+Cargo.lock @polis-team @polis-maintainers
+release.toml @polis-team @polis-maintainers
+Dockerfile @polis-team @polis-maintainers
+docker-compose.yml @polis-team @polis-maintainers
+
+# CI/CD
+/.github/ @polis-team @polis-ci-team
+/scripts/ @polis-team @polis-ci-team
+
+# Security
+SECURITY.md @polis-team @polis-security-team
+.github/security/ @polis-team @polis-security-team
+
+# Legal
+LICENSE @polis-team @polis-legal-team
+PRIVACY.md @polis-team @polis-legal-team

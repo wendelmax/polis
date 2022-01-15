@@ -1,0 +1,72 @@
+[workspace]
+resolver = "2"
+members = [
+    "polis-core",
+    "polis-runtime",
+    "polis-api",
+    "polis-cli",
+    "polis-image",
+    "polis-network",
+    "polis-security",
+    "polis-storage",
+    "polis-orchestrator",
+    "polis-monitor",
+    "polis-auth",
+    "polis-benchmarks",
+    "polis-optimization",
+    "polis-sdk",
+    "polis-tests",
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+authors = ["Polis Team"]
+license = "MIT"
+repository = "https://github.com/polis-project/polis"
+description = "Polis - Container Runtime and Orchestration Platform"
+
+[workspace.dependencies]
+tokio = { version = "1.0", features = ["full"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+anyhow = "1.0"
+thiserror = "1.0"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+tracing-appender = "0.2"
+clap = { version = "4.0", features = ["derive"] }
+uuid = { version = "1.0", features = ["v4", "serde"] }
+chrono = { version = "0.4", features = ["serde"] }
+serde_yaml = "0.9"
+toml = "0.8"
+async-trait = "0.1"
+bytes = "1.0"
+futures = "0.3"
+hyper = { version = "0.14", features = ["full"] }
+tonic = { version = "0.10", features = ["tls"] }
+prost = "0.12"
+nix = "0.27"
+libc = "0.2"
+sysinfo = "0.29"
+cgroups = "0.1"
+oci-spec = "0.6"
+tar = "0.4"
+flate2 = "1.0"
+sha2 = "0.10"
+base64 = "0.21"
+url = "2.4"
+reqwest = { version = "0.11", features = ["json"] }
+tempfile = "3.8"
+walkdir = "2.4"
+jsonwebtoken = "9.2"
+argon2 = "0.5"
+rand = "0.8"
+
+# Development dependencies
+[workspace.dependencies.criterion]
+version = "0.5"
+features = ["html_reports"]
+
+[workspace.dependencies.cargo-llvm-cov]
+version = "0.5"

@@ -1,0 +1,27 @@
+[package]
+name = "polis-runtime"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+description = "OCI-compliant container runtime"
+
+[dependencies]
+polis-core = { path = "../polis-core" }
+polis-security = { path = "../polis-security" }
+polis-storage = { path = "../polis-storage" }
+polis-network = { path = "../polis-network" }
+
+tokio = { workspace = true }
+serde = { workspace = true }
+anyhow = { workspace = true }
+thiserror = { workspace = true }
+tracing = { workspace = true }
+async-trait = { workspace = true }
+nix = { workspace = true }
+libc = { workspace = true }
+sysinfo = { workspace = true }
+cgroups = { workspace = true }
+oci-spec = { workspace = true }
+chrono = { workspace = true }

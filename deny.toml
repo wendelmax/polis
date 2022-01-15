@@ -1,0 +1,25 @@
+# Cargo deny configuration for Polis
+[advisories]
+db-path = "~/.cargo/advisory-db"
+url = "https://github.com/RustSec/advisory-db"
+query = "severity >= moderate"
+ignore = []
+
+[bans]
+multiple-versions = "warn"
+wildcards = "deny"
+allow = []
+
+[licenses]
+allow = ["MIT", "Apache-2.0", "BSD-3-Clause", "ISC", "Unlicense"]
+deny = ["GPL-2.0", "GPL-3.0", "AGPL-3.0"]
+copyleft = "deny"
+allow-osi-fsf-free = "neither"
+default = "deny"
+exceptions = []
+
+[sources]
+unknown-registry = "deny"
+unknown-git = "deny"
+allow-registry = ["crates-io"]
+allow-git = []

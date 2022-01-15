@@ -1,0 +1,104 @@
+# Codecov configuration for Polis
+coverage:
+  status:
+    project:
+      default:
+        target: 80%
+        threshold: 5%
+    patch:
+      default:
+        target: 70%
+        threshold: 5%
+
+# Ignore certain files and directories
+ignore:
+  - "target/"
+  - "examples/"
+  - "tests/"
+  - "benches/"
+  - "*.md"
+  - "*.txt"
+  - "*.yml"
+  - "*.yaml"
+  - "*.toml"
+  - "*.json"
+  - "*.sh"
+  - "*.ps1"
+  - "Dockerfile"
+  - "docker-compose.yml"
+  - ".github/"
+  - "scripts/"
+  - "docs/"
+
+# Comment on pull requests
+comment:
+  layout: "header,diff,files,footer"
+  behavior: default
+  require_changes: false
+  require_base: no
+  require_head: yes
+
+# Notify on coverage changes
+notify:
+  wait_for_ci: true
+  require_ci_to_pass: yes
+
+# Coverage reports
+coverage:
+  precision: 2
+  round: down
+  range: "70...100"
+
+# Flags for different components
+flags:
+  polis-core:
+    paths:
+      - "polis-core/"
+  polis-runtime:
+    paths:
+      - "polis-runtime/"
+  polis-api:
+    paths:
+      - "polis-api/"
+  polis-cli:
+    paths:
+      - "polis-cli/"
+  polis-image:
+    paths:
+      - "polis-image/"
+  polis-network:
+    paths:
+      - "polis-network/"
+  polis-security:
+    paths:
+      - "polis-security/"
+  polis-storage:
+    paths:
+      - "polis-storage/"
+  polis-orchestrator:
+    paths:
+      - "polis-orchestrator/"
+  polis-monitor:
+    paths:
+      - "polis-monitor/"
+  polis-auth:
+    paths:
+      - "polis-auth/"
+  polis-benchmarks:
+    paths:
+      - "polis-benchmarks/"
+  polis-optimization:
+    paths:
+      - "polis-optimization/"
+  polis-sdk:
+    paths:
+      - "polis-sdk/"
+  polis-tests:
+    paths:
+      - "polis-tests/"
+
+# GitHub integration
+github_checks:
+  annotations: true
+  comment: true
+  status: true

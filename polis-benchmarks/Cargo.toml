@@ -1,0 +1,47 @@
+[package]
+name = "polis-benchmarks"
+version = "0.1.0"
+edition = "2021"
+
+[[bench]]
+name = "container_benchmarks"
+harness = false
+
+[[bench]]
+name = "image_benchmarks"
+harness = false
+
+[[bench]]
+name = "api_benchmarks"
+harness = false
+
+[[bench]]
+name = "security_benchmarks"
+harness = false
+
+[[bench]]
+name = "network_benchmarks"
+harness = false
+
+[[bench]]
+name = "storage_benchmarks"
+harness = false
+
+[dependencies]
+polis-core = { path = "../polis-core" }
+polis-runtime = { path = "../polis-runtime" }
+polis-image = { path = "../polis-image" }
+polis-api = { path = "../polis-api" }
+polis-security = { path = "../polis-security" }
+polis-network = { path = "../polis-network" }
+polis-storage = { path = "../polis-storage" }
+polis-auth = { path = "../polis-auth" }
+
+# Benchmarking
+criterion = { version = "0.5", features = ["html_reports"] }
+tokio = { version = "1.0", features = ["full"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+uuid = { version = "1.0", features = ["v4"] }
+tempfile = "3.0"
+chrono = { version = "0.4", features = ["serde"] }

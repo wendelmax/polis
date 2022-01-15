@@ -1,0 +1,26 @@
+[package]
+name = "polis-auth"
+version = "0.1.0"
+edition = "2021"
+authors = ["Polis Team"]
+license = "MIT"
+repository = "https://github.com/polis-project/polis"
+description = "Polis Authentication and Authorization System"
+
+[dependencies]
+polis-core = { path = "../polis-core" }
+jsonwebtoken = "9.2"
+chrono = { version = "0.4", features = ["serde"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+uuid = { version = "1.0", features = ["v4", "serde"] }
+sha2 = "0.10"
+base64 = "0.21"
+argon2 = "0.5"
+rand = "0.8"
+tokio = { version = "1.0", features = ["full"] }
+hyper = { version = "0.14", features = ["full"] }
+tower = "0.4"
+anyhow = "1.0"
+thiserror = "1.0"
+tracing = "0.1"

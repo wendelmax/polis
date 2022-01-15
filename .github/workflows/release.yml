@@ -1,0 +1,80 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Install Rust
+      uses: actions-rs/toolchain@v1
+      with:
+        toolchain: stable
+        components: rustfmt, clippy
+    
+    - name: Install cross-compilation targets
+      run: |
+        rustup target add x86_64-unknown-linux-gnu
+        rustup target add aarch64-unknown-linux-gnu
+        rustup target add x86_64-apple-darwin
+        rustup target add aarch64-apple-darwin
+        rustup target add x86_64-pc-windows-gnu
+    
+    - name: Install cross-compilation dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y gcc-mingw-w64-x86-64
+    
+    - name: Build for Linux x86_64
+      run: cargo build --release --target x86_64-unknown-linux-gnu --bin polis-cli
+    
+    - name: Build for Linux aarch64
+      run: cargo build --release --target aarch64-unknown-linux-gnu --bin polis-cli
+    
+    - name: Build for macOS x86_64
+      run: cargo build --release --target x86_64-apple-darwin --bin polis-cli
+    
+    - name: Build for macOS aarch64
+      run: cargo build --release --target aarch64-apple-darwin --bin polis-cli
+    
+    - name: Build for Windows x86_64
+      run: cargo build --release --target x86_64-pc-windows-gnu --bin polis-cli
+    
+    - name: Create release packages
+      run: |
+        mkdir -p release
+        cp target/x86_64-unknown-linux-gnu/release/polis-cli release/polis-linux-x86_64
+        cp target/aarch64-unknown-linux-gnu/release/polis-cli release/polis-linux-aarch64
+        cp target/x86_64-apple-darwin/release/polis-cli release/polis-macos-x86_64
+        cp target/aarch64-apple-darwin/release/polis-cli release/polis-macos-aarch64
+        cp target/x86_64-pc-windows-gnu/release/polis-cli.exe release/polis-windows-x86_64.exe
+        
+        # Create archives
+        cd release
+        tar -czf polis-linux-x86_64.tar.gz polis-linux-x86_64
+        tar -czf polis-linux-aarch64.tar.gz polis-linux-aarch64
+        tar -czf polis-macos-x86_64.tar.gz polis-macos-x86_64
+        tar -czf polis-macos-aarch64.tar.gz polis-macos-aarch64
+        zip polis-windows-x86_64.zip polis-windows-x86_64.exe
+        
+        # Create checksums
+        sha256sum *.tar.gz *.zip > checksums.txt
+    
+    - name: Create Release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: |
+          release/*.tar.gz
+          release/*.zip
+          release/checksums.txt
+        draft: false
+        prerelease: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

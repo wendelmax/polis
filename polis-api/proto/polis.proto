@@ -1,0 +1,223 @@
+syntax = "proto3";
+
+package polis;
+
+option go_package = "github.com/polis/polis-api/proto";
+
+// Container service
+service ContainerService {
+    rpc ListContainers(ListContainersRequest) returns (ListContainersResponse);
+    rpc GetContainer(GetContainerRequest) returns (GetContainerResponse);
+    rpc CreateContainer(CreateContainerRequest) returns (CreateContainerResponse);
+    rpc StartContainer(StartContainerRequest) returns (StartContainerResponse);
+    rpc StopContainer(StopContainerRequest) returns (StopContainerResponse);
+    rpc RemoveContainer(RemoveContainerRequest) returns (RemoveContainerResponse);
+    rpc PauseContainer(PauseContainerRequest) returns (PauseContainerResponse);
+    rpc UnpauseContainer(UnpauseContainerRequest) returns (UnpauseContainerResponse);
+}
+
+// Image service
+service ImageService {
+    rpc ListImages(ListImagesRequest) returns (ListImagesResponse);
+    rpc GetImage(GetImageRequest) returns (GetImageResponse);
+    rpc PullImage(PullImageRequest) returns (PullImageResponse);
+    rpc RemoveImage(RemoveImageRequest) returns (RemoveImageResponse);
+}
+
+// System service
+service SystemService {
+    rpc GetSystemInfo(GetSystemInfoRequest) returns (GetSystemInfoResponse);
+    rpc HealthCheck(HealthCheckRequest) returns (HealthCheckResponse);
+}
+
+// Container messages
+message Container {
+    string id = 1;
+    string name = 2;
+    string image = 3;
+    string status = 4;
+    string created_at = 5;
+    string started_at = 6;
+    string finished_at = 7;
+    int32 exit_code = 8;
+    repeated string command = 9;
+    string working_dir = 10;
+    map<string, string> environment = 11;
+    map<string, string> labels = 12;
+    ResourceLimits resource_limits = 13;
+    NetworkMode network_mode = 14;
+    repeated PortMapping ports = 15;
+    repeated VolumeMount volumes = 16;
+}
+
+message ResourceLimits {
+    optional uint64 memory_limit = 1;
+    optional uint64 memory_swap = 2;
+    optional double cpu_quota = 3;
+    optional uint64 cpu_period = 4;
+    optional int64 pids_limit = 5;
+    optional uint64 disk_quota = 6;
+}
+
+message NetworkMode {
+    string mode = 1;
+    optional string container_id = 2;
+}
+
+message PortMapping {
+    string host_port = 1;
+    string container_port = 2;
+    string protocol = 3;
+}
+
+message VolumeMount {
+    string source = 1;
+    string target = 2;
+    string mode = 3;
+}
+
+// Image messages
+message Image {
+    string id = 1;
+    string name = 2;
+    string tag = 3;
+    string digest = 4;
+    uint64 size = 5;
+    string created_at = 6;
+    string architecture = 7;
+    string os = 8;
+    repeated string layers = 9;
+    ImageConfig config = 10;
+}
+
+message ImageConfig {
+    repeated string entrypoint = 1;
+    repeated string cmd = 2;
+    repeated string env = 3;
+    optional string working_dir = 4;
+    map<string, string> exposed_ports = 5;
+    map<string, string> volumes = 6;
+    map<string, string> labels = 7;
+}
+
+// Request/Response messages
+message ListContainersRequest {}
+
+message ListContainersResponse {
+    repeated Container containers = 1;
+}
+
+message GetContainerRequest {
+    string id = 1;
+}
+
+message GetContainerResponse {
+    Container container = 1;
+}
+
+message CreateContainerRequest {
+    string name = 1;
+    string image = 2;
+    repeated string command = 3;
+    map<string, string> environment = 4;
+    map<string, string> labels = 5;
+    ResourceLimits resource_limits = 6;
+    NetworkMode network_mode = 7;
+    repeated PortMapping ports = 8;
+    repeated VolumeMount volumes = 9;
+}
+
+message CreateContainerResponse {
+    string id = 1;
+    string name = 2;
+    string status = 3;
+}
+
+message StartContainerRequest {
+    string id = 1;
+}
+
+message StartContainerResponse {
+    string status = 1;
+}
+
+message StopContainerRequest {
+    string id = 1;
+}
+
+message StopContainerResponse {
+    string status = 1;
+}
+
+message RemoveContainerRequest {
+    string id = 1;
+}
+
+message RemoveContainerResponse {
+    string status = 1;
+}
+
+message PauseContainerRequest {
+    string id = 1;
+}
+
+message PauseContainerResponse {
+    string status = 1;
+}
+
+message UnpauseContainerRequest {
+    string id = 1;
+}
+
+message UnpauseContainerResponse {
+    string status = 1;
+}
+
+message ListImagesRequest {}
+
+message ListImagesResponse {
+    repeated Image images = 1;
+}
+
+message GetImageRequest {
+    string id = 1;
+}
+
+message GetImageResponse {
+    Image image = 1;
+}
+
+message PullImageRequest {
+    string name = 1;
+}
+
+message PullImageResponse {
+    Image image = 1;
+}
+
+message RemoveImageRequest {
+    string id = 1;
+}
+
+message RemoveImageResponse {
+    string status = 1;
+}
+
+message GetSystemInfoRequest {}
+
+message GetSystemInfoResponse {
+    string service = 1;
+    string version = 2;
+    string runtime = 3;
+    string architecture = 4;
+    string os = 5;
+    string status = 6;
+}
+
+message HealthCheckRequest {}
+
+message HealthCheckResponse {
+    string status = 1;
+    string service = 2;
+}
+

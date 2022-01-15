@@ -1,0 +1,20 @@
+[package]
+name = "polis-monitor"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+description = "Monitoring and observability for Polis"
+
+[dependencies]
+polis-core = { path = "../polis-core" }
+
+tokio = { workspace = true }
+serde = { workspace = true }
+anyhow = { workspace = true }
+thiserror = { workspace = true }
+tracing = { workspace = true }
+sysinfo = { workspace = true }
+serde_json = "1.0"
+chrono = { version = "0.4", features = ["serde"] }

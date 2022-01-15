@@ -1,0 +1,17 @@
+# Cargo audit configuration for Polis
+[advisory-database]
+url = "https://github.com/RustSec/advisory-db"
+path = "~/.cargo/advisory-db"
+
+[advisories]
+ignore = []
+informational-warn = ["unmaintained", "unsound", "yanked"]
+informational-den = []
+
+[output]
+format = "json"
+quiet = false
+verbose = true
+
+[exclude]
+packages = []

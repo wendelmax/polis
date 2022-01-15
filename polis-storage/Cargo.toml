@@ -1,0 +1,20 @@
+[package]
+name = "polis-storage"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+description = "Container storage and volume management"
+
+[dependencies]
+polis-core = { path = "../polis-core" }
+
+tokio = { workspace = true }
+serde = { workspace = true }
+anyhow = { workspace = true }
+thiserror = { workspace = true }
+tracing = { workspace = true }
+tempfile = { workspace = true }
+walkdir = { workspace = true }
+

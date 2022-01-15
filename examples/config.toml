@@ -1,0 +1,34 @@
+[runtime]
+root_dir = "/var/lib/polis"
+log_level = "Info"
+debug = false
+max_containers = 100
+container_timeout = 30
+
+[storage]
+driver = "Overlay2"
+root_dir = "/var/lib/polis/storage"
+max_size = null
+cleanup_on_exit = true
+
+[network]
+driver = "Bridge"
+bridge_name = "polis0"
+subnet = "172.17.0.0/16"
+gateway = "172.17.0.1"
+dns_servers = ["8.8.8.8", "8.8.4.4"]
+
+[security]
+seccomp_profile = "default"
+apparmor_profile = "docker-default"
+no_new_privileges = true
+drop_capabilities = ["ALL"]
+read_only_rootfs = false
+
+[api]
+rest_port = 8080
+grpc_port = 9090
+host = "0.0.0.0"
+enable_cors = true
+timeout_seconds = 30
+

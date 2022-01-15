@@ -1,0 +1,40 @@
+# Configuração do Criterion para benchmarks do Polis
+
+# Configurações globais
+[global]
+# Número de amostras para cada benchmark
+sample_size = 100
+
+# Número de iterações por amostra
+measurement_time = "5s"
+
+# Número de iterações de aquecimento
+warm_up_time = "2s"
+
+# Configurações de relatório
+[report]
+# Formato de saída (html, json, csv)
+output = ["html", "json"]
+
+# Diretório para relatórios
+output_directory = "reports"
+
+# Configurações de plot
+[plot]
+# Tipos de gráficos a gerar
+backends = ["html", "svg"]
+
+# Configurações de benchmark
+[bench]
+# Número de threads para benchmarks
+threads = 4
+
+# Configurações de memória
+[memory]
+# Limite de memória para benchmarks (em MB)
+limit = 1024
+
+# Configurações de CPU
+[cpu]
+# Limite de CPU para benchmarks (em %)
+limit = 80
