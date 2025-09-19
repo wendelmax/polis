@@ -43,7 +43,7 @@ toml = "0.8"
 async-trait = "0.1"
 bytes = "1.0"
 futures = "0.3"
-hyper = { version = "0.14", features = ["full"] }
+hyper = { version = "1.7", features = ["full"] }
 tonic = { version = "0.10", features = ["tls"] }
 prost = "0.14"
 nix = "0.30"
