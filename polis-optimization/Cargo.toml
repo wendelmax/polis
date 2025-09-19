@@ -35,7 +35,7 @@ perf-event = "0.4"
 
 # Caching and optimization
 lru = "0.12"
-dashmap = "5.5"
+dashmap = "6.1"
 arc-swap = "1.6"
 crossbeam = "0.8"
 
