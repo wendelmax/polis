@@ -26,7 +26,7 @@ thiserror = "1.0"
 # Memory optimization
 jemallocator = "0.5"
 mimalloc = "0.1"
-tcmalloc = "0.1"
+tcmalloc = "0.3"
 
 # Performance monitoring
 sysinfo = "0.29"
