@@ -56,7 +56,7 @@ flate2 = "1.0"
 sha2 = "0.10"
 base64 = "0.21"
 url = "2.4"
-reqwest = { version = "0.11", features = ["json"] }
+reqwest = { version = "0.12", features = ["json"] }
 tempfile = "3.8"
 walkdir = "2.4"
 jsonwebtoken = "9.2"
