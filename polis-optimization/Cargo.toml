@@ -21,12 +21,12 @@ uuid = { version = "1.0", features = ["v4"] }
 chrono = { version = "0.4", features = ["serde"] }
 tracing = "0.1"
 anyhow = "1.0"
-thiserror = "1.0"
+thiserror = "2.0"
 
 # Memory optimization
 jemallocator = "0.5"
 mimalloc = "0.1"
-tcmalloc = "0.1"
+tcmalloc = "0.3"
 
 # Performance monitoring
 sysinfo = "0.37"
@@ -50,5 +50,5 @@ async-trait = "0.1"
 tokio-util = "0.7"
 
 # Memory profiling
-heaptrack = "0.1"
+heaptrack = "0.4"
 flamegraph = "0.6"
