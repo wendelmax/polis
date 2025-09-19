@@ -46,7 +46,7 @@ futures = "0.3"
 hyper = { version = "0.14", features = ["full"] }
 tonic = { version = "0.10", features = ["tls"] }
 prost = "0.12"
-nix = "0.27"
+nix = "0.30"
 libc = "0.2"
 sysinfo = "0.29"
 cgroups = "0.1"
