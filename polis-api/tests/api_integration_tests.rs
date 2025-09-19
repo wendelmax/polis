@@ -18,7 +18,7 @@ async fn test_rest_server_creation() {
     let image_manager = Arc::new(ImageManager::new(image_cache_dir));
 
     let auth_manager = Arc::new(RwLock::new(polis_auth::AuthManager::new(
-        "test-secret".to_string(),
+        std::env::var("JWT_SECRET").unwrap_or_else(|_| "test-secret".to_string()),
     )));
     let _rest_server = RestServer::new(runtime, image_manager, auth_manager);
 

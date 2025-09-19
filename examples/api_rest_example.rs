@@ -7,7 +7,7 @@ const BASE_URL: &str = "http://localhost:8080/api/v1";
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    println!("🌐 Exemplo de Uso da API REST do Polis");
+    println!("� Exemplo de Uso da API REST do Polis");
     println!("=====================================");
 
     let client = reqwest::Client::new();
@@ -21,9 +21,9 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     
     if health_response.status().is_success() {
         let health: Value = health_response.json().await?;
-        println!("✅ Sistema saudável: {:?}", health["status"]);
+        println!(" Sistema saudável: {:?}", health["status"]);
     } else {
-        println!("❌ Sistema não está saudável");
+        println!(" Sistema não está saudável");
         return Ok(());
     }
 
@@ -35,7 +35,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .await?;
     
     let system_info: Value = info_response.json().await?;
-    println!("📊 Informações do sistema:");
+    println!(" Informações do sistema:");
     println!("   Versão: {}", system_info["version"]);
     println!("   OS: {}", system_info["os"]);
     println!("   Containers rodando: {}", system_info["containers_running"]);
@@ -48,7 +48,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .await?;
     
     let images: Value = images_response.json().await?;
-    println!("📦 Imagens disponíveis: {}", images["images"].as_array().unwrap().len());
+    println!(" Imagens disponíveis: {}", images["images"].as_array().unwrap().len());
 
     // 4. Baixar uma imagem
     println!("\n4. Baixando imagem alpine:latest...");
@@ -65,9 +65,9 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     
     if pull_response.status().is_success() {
         let pull_result: Value = pull_response.json().await?;
-        println!("✅ Imagem baixada: {}", pull_result["image_id"]);
+        println!(" Imagem baixada: {}", pull_result["image_id"]);
     } else {
-        println!("❌ Falha ao baixar imagem");
+        println!(" Falha ao baixar imagem");
     }
 
     // 5. Criar um container
@@ -101,7 +101,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     
     let container: Value = create_response.json().await?;
     let container_id = container["id"].as_str().unwrap();
-    println!("✅ Container criado: {}", container_id);
+    println!(" Container criado: {}", container_id);
 
     // 6. Iniciar o container
     println!("\n6. Iniciando container...");
@@ -112,9 +112,9 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     
     if start_response.status().is_success() {
         let start_result: Value = start_response.json().await?;
-        println!("✅ Container iniciado: {}", start_result["message"]);
+        println!(" Container iniciado: {}", start_result["message"]);
     } else {
-        println!("❌ Falha ao iniciar container");
+        println!(" Falha ao iniciar container");
     }
 
     // 7. Aguardar um pouco
@@ -129,7 +129,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .await?;
     
     let container_status: Value = status_response.json().await?;
-    println!("📊 Status do container: {}", container_status["status"]);
+    println!(" Status do container: {}", container_status["status"]);
 
     // 9. Obter logs do container
     println!("\n9. Obtendo logs do container...");
@@ -141,7 +141,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     
     if logs_response.status().is_success() {
         let logs: Value = logs_response.json().await?;
-        println!("📝 Logs do container:");
+        println!(" Logs do container:");
         for log_entry in logs["logs"].as_array().unwrap() {
             println!("   [{}] {}: {}", 
                 log_entry["timestamp"], 
@@ -159,7 +159,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .await?;
     
     let metrics: Value = metrics_response.json().await?;
-    println!("📊 Métricas do sistema:");
+    println!(" Métricas do sistema:");
     println!("   CPU: {:.2}%", metrics["cpu_usage"]);
     println!("   Memória: {:.2}%", metrics["memory_usage"]);
     println!("   Disco: {:.2}%", metrics["disk_usage"]);
@@ -174,7 +174,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     
     if container_metrics_response.status().is_success() {
         let container_metrics: Value = container_metrics_response.json().await?;
-        println!("📊 Métricas do container:");
+        println!(" Métricas do container:");
         println!("   CPU: {:.2}%", container_metrics["cpu_usage"]);
         println!("   Memória: {} bytes", container_metrics["memory_usage"]);
         println!("   Limite de memória: {} bytes", container_metrics["memory_limit"]);
@@ -188,7 +188,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .await?;
     
     let containers: Value = containers_response.json().await?;
-    println!("📦 Containers disponíveis:");
+    println!(" Containers disponíveis:");
     for container in containers["containers"].as_array().unwrap() {
         println!("   - {} ({}) - {}", 
             container["name"], 
@@ -206,9 +206,9 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     
     if stop_response.status().is_success() {
         let stop_result: Value = stop_response.json().await?;
-        println!("✅ Container parado: {}", stop_result["message"]);
+        println!(" Container parado: {}", stop_result["message"]);
     } else {
-        println!("❌ Falha ao parar container");
+        println!(" Falha ao parar container");
     }
 
     // 14. Remover o container
@@ -220,9 +220,9 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     
     if remove_response.status().is_success() {
         let remove_result: Value = remove_response.json().await?;
-        println!("✅ Container removido: {}", remove_result["message"]);
+        println!(" Container removido: {}", remove_result["message"]);
     } else {
-        println!("❌ Falha ao remover container");
+        println!(" Falha ao remover container");
     }
 
     // 15. Obter estatísticas finais
@@ -233,14 +233,14 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .await?;
     
     let stats: Value = stats_response.json().await?;
-    println!("📊 Estatísticas finais:");
+    println!(" Estatísticas finais:");
     println!("   Containers rodando: {}", stats["containers"]["running"]);
     println!("   Containers parados: {}", stats["containers"]["stopped"]);
     println!("   Total de containers: {}", stats["containers"]["total"]);
     println!("   Total de imagens: {}", stats["images"]["total"]);
     println!("   Uso de armazenamento: {} bytes", stats["storage"]["used"]);
 
-    println!("\n🎉 Exemplo da API REST concluído com sucesso!");
+    println!("\n Exemplo da API REST concluído com sucesso!");
     Ok(())
 }
 

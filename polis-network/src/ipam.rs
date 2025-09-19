@@ -47,7 +47,7 @@ impl IpamManager {
 
         self.pools.insert(name.to_string(), pool);
         println!(
-            "🌐 Pool IP '{}' criado: {} (gateway: {})",
+            "� Pool IP '{}' criado: {} (gateway: {})",
             name, subnet, gateway
         );
         Ok(())
@@ -80,7 +80,7 @@ impl IpamManager {
             gateway: pool.gateway,
         };
 
-        println!("🌐 IP {} alocado para container {}", ip, container_id);
+        println!("� IP {} alocado para container {}", ip, container_id);
         Ok(allocation)
     }
 
@@ -97,7 +97,7 @@ impl IpamManager {
 
         if let Some(ip) = pool.allocated_ips.remove(container_id) {
             pool.available_ips.push(ip);
-            println!("🌐 IP {} desalocado do container {}", ip, container_id);
+            println!("� IP {} desalocado do container {}", ip, container_id);
         }
 
         Ok(())

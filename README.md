@@ -1,18 +1,19 @@
-# Polis - Container Runtime
+# Polis - Container Runtime Profissional
 
-Um container runtime moderno e eficiente escrito em Rust, projetado para ser uma alternativa ao Docker com foco em performance, segurança e simplicidade.
+Um container runtime moderno e eficiente escrito em Rust, projetado para ser uma alternativa profissional ao Docker com foco em performance, segurança e simplicidade.
 
 ## 🚀 Características
 
-- **Performance**: Inicialização rápida (~50ms) e baixo overhead (~25MB)
+- **Performance**: Inicialização rápida e baixo overhead de memória
 - **Segurança**: Isolamento robusto com namespaces, cgroups, seccomp e capabilities
 - **Simplicidade**: Interface CLI intuitiva e APIs REST/gRPC completas
 - **Compatibilidade**: Suporte completo ao padrão OCI
 - **Modularidade**: Arquitetura baseada em componentes independentes
 - **Monitoramento**: Sistema completo de métricas, logs e health checks
 - **Rede**: Gerenciamento avançado de redes com IPAM, firewall e DNS
+- **Orquestração**: Sistema completo de deploy, scaling e service discovery
 
-## 📦 Estrutura do Projeto
+##  Estrutura do Projeto
 
 ```
 polis/
@@ -32,7 +33,7 @@ polis/
 └── docs/                # Documentação completa
 ```
 
-## 🛠️ Instalação
+## 📦 Instalação
 
 ### Pré-requisitos
 
@@ -40,7 +41,18 @@ polis/
 - Linux (para funcionalidades de isolamento)
 - Privilégios de root (para algumas operações)
 
-### Compilação
+### Instalação Rápida (Windows)
+
+```powershell
+# Execute o instalador
+.\installers\windows\install.ps1
+
+# Configure variáveis de ambiente (opcional)
+cp env.example .env
+# Edite .env com suas configurações
+```
+
+### Compilação Manual
 
 ```bash
 git clone https://github.com/polis/polis.git
@@ -63,37 +75,40 @@ sudo cp target/release/polis-grpc /usr/local/bin/
 polis init
 
 # Baixar uma imagem
-polis pull alpine:latest
+polis image pull alpine:latest
 
 # Criar e executar um container
-polis create --name hello --image alpine:latest --command "echo Hello World"
-polis start hello
+polis container create --name hello --image alpine:latest --command "echo Hello World"
+polis container start hello
 
 # Listar containers
-polis list
+polis container list
 
 # Ver logs
-polis logs hello
+polis container logs hello
 
 # Ver métricas
-polis metrics system
+polis stats system
 
 # Verificar saúde
 polis health
+
+# Deploy de aplicação
+polis deploy create --name webapp --image nginx:alpine --replicas 3
+polis deploy list
+polis deploy scale webapp 5
 ```
 
 ## 📚 Documentação
 
-- [Tutorial Completo](docs/TUTORIAL.md) - Guia passo a passo
-- [Referência da API REST](docs/API_REST.md) - Documentação completa da API
-- [Referência da API gRPC](docs/API_GRPC.md) - Documentação da API gRPC
-- [Guia de Migração do Docker](docs/MIGRATION_DOCKER.md) - Migre facilmente do Docker
-- [Arquitetura](docs/ARCHITECTURE.md) - Visão técnica do sistema
+- [Guia de Instalação](docs/README.md) - Instalação e configuração
 - [Exemplos Práticos](examples/) - Código de exemplo
+- [API REST](polis-api/) - Documentação da API REST
+- [API gRPC](polis-api/proto/) - Documentação da API gRPC
 
-## 🌟 Funcionalidades Implementadas
+## � Funcionalidades Implementadas
 
-### ✅ Concluído
+### 🎯 Concluído
 - [x] Sistema de configuração robusto
 - [x] Runtime básico de containers
 - [x] Suporte completo a imagens OCI
@@ -102,15 +117,22 @@ polis health
 - [x] Testes unitários e de integração
 - [x] Gerenciamento de rede completo
 - [x] Sistema de monitoramento avançado
+- [x] Orquestração completa (deploy, scaling, service discovery)
+- [x] Sistema de autenticação e autorização
+- [x] Gerenciamento de volumes
+- [x] Build de imagens a partir de Dockerfile
+- [x] Sistema de limpeza de imagens
+- [x] Port forwarding e load balancing
+- [x] Health monitoring e auto-scaling
 - [x] Documentação completa
 
-### 🔄 Em Desenvolvimento
-- [ ] Orquestração com Kubernetes
+### � Em Desenvolvimento
 - [ ] Interface web para gerenciamento
-- [ ] Suporte a Windows
+- [ ] Suporte completo a Windows
 - [ ] Plugins e extensões
+- [ ] Integração com Kubernetes
 
-## 🎯 Exemplos de Uso
+##  Exemplos de Uso
 
 ### Container Simples
 ```bash
@@ -151,7 +173,7 @@ polis health
 polis logs --follow app
 ```
 
-## 🔧 APIs
+##  APIs
 
 ### API REST
 ```bash
@@ -172,7 +194,7 @@ polis-grpc --port 9090
 grpcurl -plaintext localhost:9090 list
 ```
 
-## 📊 Performance
+##  Performance
 
 - **Inicialização**: < 50ms
 - **Uso de Memória**: < 25MB
@@ -180,7 +202,7 @@ grpcurl -plaintext localhost:9090 list
 - **Latência de API**: < 10ms
 - **Overhead**: 90% menor que Docker
 
-## 🔒 Segurança
+## � Segurança
 
 - **Namespaces**: PID, Mount, Network, UTS, IPC, User, Cgroup
 - **Cgroups**: Limitação de recursos (CPU, memória, I/O)
@@ -188,7 +210,7 @@ grpcurl -plaintext localhost:9090 list
 - **Capabilities**: Controle granular de privilégios
 - **Rootless**: Suporte a execução sem root
 
-## 🤝 Contribuindo
+## � Contribuindo
 
 Veja [CONTRIBUTING.md](CONTRIBUTING.md) para detalhes sobre como contribuir.
 
@@ -205,18 +227,18 @@ cargo run -p polis-cli --example basic_usage
 cargo run -p polis-api --example api_example
 ```
 
-## 📄 Licença
+## � Licença
 
 Este projeto está licenciado sob a Licença MIT - veja [LICENSE](LICENSE) para detalhes.
 
-## 🎯 Status do Projeto
+##  Status do Projeto
 
 **Versão Atual**: 0.1.0  
 **Status**: Beta - Pronto para testes
 
 Veja [ROADMAP.md](ROADMAP.md) para o plano de desenvolvimento completo.
 
-## 🌟 Destaques
+## � Destaques
 
 - **100% Rust**: Performance e segurança de memória
 - **OCI Compliant**: Compatível com padrões da indústria
@@ -224,7 +246,7 @@ Veja [ROADMAP.md](ROADMAP.md) para o plano de desenvolvimento completo.
 - **Brasileiro**: Desenvolvido com foco na comunidade brasileira
 - **Open Source**: Código aberto e contribuições bem-vindas
 
-## 📞 Suporte
+## � Suporte
 
 - [GitHub Issues](https://github.com/polis/polis/issues)
 - [Discord](https://discord.gg/polis)
@@ -233,4 +255,4 @@ Veja [ROADMAP.md](ROADMAP.md) para o plano de desenvolvimento completo.
 
 ---
 
-**Polis** - Container Runtime moderno, seguro e eficiente. Feito com ❤️ no Brasil.
+**Polis** - Container Runtime moderno, seguro e eficiente. Feito com ❤ no Brasil.

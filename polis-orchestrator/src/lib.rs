@@ -17,7 +17,13 @@ pub use load_balancer::{
     ConsistentHashRing, EndpointStats, LoadBalancer, LoadBalancerRequest, LoadBalancerResponse,
     LoadBalancerStats,
 };
-pub use orchestrator::*;
+pub use orchestrator::{
+    Orchestrator, OrchestratorConfig, DeploymentSpec, PortSpec, HealthCheckSpec, 
+    ScalingPolicySpec, ResourceSpec, DeploymentStatusResult, DeploymentStatusType, OrchestratorStats,
+    Service as OrchestratorService, ServiceEndpoint as OrchestratorServiceEndpoint, 
+    ServiceStatus as OrchestratorServiceStatus, HealthStatus as OrchestratorHealthStatus, 
+    Deployment as OrchestratorDeployment
+};
 pub use scheduler::*;
 pub use service_discovery::{
     DnsRecord, DnsResolver, HealthCheck, HealthChecker, LoadBalancerConfig, LoadBalancingAlgorithm,

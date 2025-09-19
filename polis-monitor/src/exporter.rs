@@ -87,7 +87,7 @@ impl MetricsExporter {
         }
 
         println!(
-            "📤 Exportação concluída: {} registros em {}ms",
+            "� Exportação concluída: {} registros em {}ms",
             records_exported, duration
         );
 
@@ -111,7 +111,7 @@ impl MetricsExporter {
             self.send_to_endpoint(&json_data, "application/json")
                 .await?;
         } else {
-            println!("📄 JSON Export:\n{}", json_data);
+            println!("� JSON Export:\n{}", json_data);
         }
 
         Ok(batch.len())
@@ -169,7 +169,7 @@ impl MetricsExporter {
         if let Some(_endpoint) = &self.config.endpoint {
             self.send_to_endpoint(&csv, "text/csv").await?;
         } else {
-            println!("📊 CSV Export:\n{}", csv);
+            println!(" CSV Export:\n{}", csv);
         }
 
         Ok(batch.len())
@@ -200,7 +200,7 @@ impl MetricsExporter {
             self.send_to_endpoint(&prometheus_data, "text/plain")
                 .await?;
         } else {
-            println!("📈 Prometheus Export:\n{}", prometheus_data);
+            println!(" Prometheus Export:\n{}", prometheus_data);
         }
 
         Ok(batch.len())
@@ -234,7 +234,7 @@ impl MetricsExporter {
         if let Some(_endpoint) = &self.config.endpoint {
             self.send_to_endpoint(&influx_data, "text/plain").await?;
         } else {
-            println!("📊 InfluxDB Export:\n{}", influx_data);
+            println!(" InfluxDB Export:\n{}", influx_data);
         }
 
         Ok(batch.len())
@@ -269,7 +269,7 @@ impl MetricsExporter {
             self.send_to_endpoint(&elastic_data, "application/x-ndjson")
                 .await?;
         } else {
-            println!("🔍 Elasticsearch Export:\n{}", elastic_data);
+            println!(" Elasticsearch Export:\n{}", elastic_data);
         }
 
         Ok(batch.len())
@@ -278,7 +278,7 @@ impl MetricsExporter {
     async fn send_to_endpoint(&self, _data: &str, content_type: &str) -> Result<()> {
         // Simulate sending data to endpoint
         println!(
-            "📤 Enviando dados para {} (Content-Type: {})",
+            "� Enviando dados para {} (Content-Type: {})",
             self.config.endpoint.as_deref().unwrap_or("unknown"),
             content_type
         );
@@ -322,7 +322,7 @@ impl MetricsExporter {
 
     pub fn update_config(&mut self, config: ExportConfig) {
         self.config = config;
-        println!("⚙️ Configuração de exportação atualizada");
+        println!("⚙ Configuração de exportação atualizada");
     }
 }
 

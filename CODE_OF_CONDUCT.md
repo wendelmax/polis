@@ -169,4 +169,4 @@ For questions about this Code of Conduct:
 
 ---
 
-**Thank you for helping make Polis a welcoming and inclusive community!** 🌟
+**Thank you for helping make Polis a welcoming and inclusive community!** �

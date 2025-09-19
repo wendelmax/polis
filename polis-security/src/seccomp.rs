@@ -70,14 +70,14 @@ impl SeccompManager {
         // Apply seccomp profile
         self.apply_seccomp_profile(profile).await?;
 
-        println!("🔒 Perfil Seccomp '{}' aplicado com sucesso", profile_name);
+        println!("� Perfil Seccomp '{}' aplicado com sucesso", profile_name);
         Ok(())
     }
 
     async fn apply_seccomp_profile(&self, profile: &SeccompProfile) -> Result<()> {
         // This is a simplified implementation
         // In a real implementation, you would use libseccomp or similar
-        println!("🔧 Aplicando perfil Seccomp: {}", profile.name);
+        println!(" Aplicando perfil Seccomp: {}", profile.name);
         println!("  - Ação padrão: {:?}", profile.default_action);
         println!("  - Regras de syscall: {}", profile.syscalls.len());
 

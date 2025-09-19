@@ -79,7 +79,7 @@ impl PortForwardingManager {
 
         self.rules.insert(rule_id.clone(), rule.clone());
         println!(
-            "🌐 Port forwarding criado: {}:{} -> {}:{} ({:?})",
+            "� Port forwarding criado: {}:{} -> {}:{} ({:?})",
             host_ip, host_port, container_ip, container_port, protocol
         );
 
@@ -88,7 +88,7 @@ impl PortForwardingManager {
 
     pub async fn remove_rule(&mut self, rule_id: &str) -> Result<()> {
         if self.rules.remove(rule_id).is_some() {
-            println!("🌐 Port forwarding removido: {}", rule_id);
+            println!("� Port forwarding removido: {}", rule_id);
             Ok(())
         } else {
             Err(PolisError::Network(format!(
@@ -101,7 +101,7 @@ impl PortForwardingManager {
     pub async fn enable_rule(&mut self, rule_id: &str) -> Result<()> {
         if let Some(rule) = self.rules.get_mut(rule_id) {
             rule.enabled = true;
-            println!("🌐 Port forwarding habilitado: {}", rule_id);
+            println!("� Port forwarding habilitado: {}", rule_id);
             Ok(())
         } else {
             Err(PolisError::Network(format!(
@@ -114,7 +114,7 @@ impl PortForwardingManager {
     pub async fn disable_rule(&mut self, rule_id: &str) -> Result<()> {
         if let Some(rule) = self.rules.get_mut(rule_id) {
             rule.enabled = false;
-            println!("🌐 Port forwarding desabilitado: {}", rule_id);
+            println!("� Port forwarding desabilitado: {}", rule_id);
             Ok(())
         } else {
             Err(PolisError::Network(format!(
@@ -213,7 +213,7 @@ impl PortForwardingManager {
         }
 
         println!(
-            "🌐 {} regras de port forwarding criadas para range {}:{}",
+            "� {} regras de port forwarding criadas para range {}:{}",
             rule_ids.len(),
             host_start_port,
             host_end_port
@@ -249,7 +249,7 @@ impl PortForwardingManager {
     pub async fn clear_rules(&mut self) -> Result<()> {
         let count = self.rules.len();
         self.rules.clear();
-        println!("🌐 {} regras de port forwarding removidas", count);
+        println!("� {} regras de port forwarding removidas", count);
         Ok(())
     }
 
@@ -267,7 +267,7 @@ impl PortForwardingManager {
         }
 
         println!(
-            "🌐 Regras de port forwarding removidas para container {}",
+            "� Regras de port forwarding removidas para container {}",
             container_ip
         );
         Ok(())

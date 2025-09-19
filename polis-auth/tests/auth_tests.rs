@@ -3,7 +3,8 @@ use uuid::Uuid;
 
 #[tokio::test]
 async fn test_auth_manager_creation() {
-    let auth_manager = AuthManager::new("test-secret".to_string());
+    let jwt_secret = std::env::var("JWT_SECRET").unwrap_or_else(|_| "test-secret".to_string());
+    let auth_manager = AuthManager::new(jwt_secret);
     assert!(auth_manager.sessions.is_empty());
 }
 
@@ -15,7 +16,7 @@ async fn test_user_creation() {
         .create_user(
             "testuser".to_string(),
             "test@example.com".to_string(),
-            "password123".to_string(),
+            std::env::var("TEST_PASSWORD").unwrap_or_else(|_| "password123".to_string()),
         )
         .await
         .unwrap();
@@ -34,14 +35,14 @@ async fn test_user_authentication() {
         .create_user(
             "testuser".to_string(),
             "test@example.com".to_string(),
-            "password123".to_string(),
+            std::env::var("TEST_PASSWORD").unwrap_or_else(|_| "password123".to_string()),
         )
         .await
         .unwrap();
 
     // Autenticar com credenciais corretas
     let user = user_manager
-        .authenticate_user("testuser", "password123")
+        .authenticate_user("testuser", &std::env::var("TEST_PASSWORD").unwrap_or_else(|_| "password123".to_string()))
         .await
         .unwrap();
     assert_eq!(user.username, "testuser");
@@ -55,7 +56,8 @@ async fn test_user_authentication() {
 
 #[tokio::test]
 async fn test_jwt_token_generation() {
-    let mut auth_manager = AuthManager::new("test-secret".to_string());
+    let jwt_secret = std::env::var("JWT_SECRET").unwrap_or_else(|_| "test-secret".to_string());
+    let mut auth_manager = AuthManager::new(jwt_secret);
 
     // Criar usuário
     let user = auth_manager
@@ -63,7 +65,7 @@ async fn test_jwt_token_generation() {
         .create_user(
             "testuser".to_string(),
             "test@example.com".to_string(),
-            "password123".to_string(),
+            std::env::var("TEST_PASSWORD").unwrap_or_else(|_| "password123".to_string()),
         )
         .await
         .unwrap();
@@ -77,7 +79,7 @@ async fn test_jwt_token_generation() {
 
     // Autenticar
     let auth_result = auth_manager
-        .authenticate("testuser", "password123")
+        .authenticate("testuser", &std::env::var("TEST_PASSWORD").unwrap_or_else(|_| "password123".to_string()))
         .await
         .unwrap();
 
@@ -87,7 +89,8 @@ async fn test_jwt_token_generation() {
 
 #[tokio::test]
 async fn test_token_validation() {
-    let mut auth_manager = AuthManager::new("test-secret".to_string());
+    let jwt_secret = std::env::var("JWT_SECRET").unwrap_or_else(|_| "test-secret".to_string());
+    let mut auth_manager = AuthManager::new(jwt_secret);
 
     // Criar usuário e autenticar
     let user = auth_manager
@@ -95,7 +98,7 @@ async fn test_token_validation() {
         .create_user(
             "testuser".to_string(),
             "test@example.com".to_string(),
-            "password123".to_string(),
+            std::env::var("TEST_PASSWORD").unwrap_or_else(|_| "password123".to_string()),
         )
         .await
         .unwrap();
@@ -106,7 +109,7 @@ async fn test_token_validation() {
         .await
         .unwrap();
     let auth_result = auth_manager
-        .authenticate("testuser", "password123")
+        .authenticate("testuser", &std::env::var("TEST_PASSWORD").unwrap_or_else(|_| "password123".to_string()))
         .await
         .unwrap();
 
@@ -121,7 +124,8 @@ async fn test_token_validation() {
 
 #[tokio::test]
 async fn test_permission_checking() {
-    let mut auth_manager = AuthManager::new("test-secret".to_string());
+    let jwt_secret = std::env::var("JWT_SECRET").unwrap_or_else(|_| "test-secret".to_string());
+    let mut auth_manager = AuthManager::new(jwt_secret);
 
     // Criar usuário e autenticar
     let user = auth_manager
@@ -129,7 +133,7 @@ async fn test_permission_checking() {
         .create_user(
             "testuser".to_string(),
             "test@example.com".to_string(),
-            "password123".to_string(),
+            std::env::var("TEST_PASSWORD").unwrap_or_else(|_| "password123".to_string()),
         )
         .await
         .unwrap();
@@ -140,7 +144,7 @@ async fn test_permission_checking() {
         .await
         .unwrap();
     let auth_result = auth_manager
-        .authenticate("testuser", "password123")
+        .authenticate("testuser", &std::env::var("TEST_PASSWORD").unwrap_or_else(|_| "password123".to_string()))
         .await
         .unwrap();
 
@@ -198,7 +202,8 @@ async fn test_user_role_assignment() {
 
 #[tokio::test]
 async fn test_token_refresh() {
-    let mut auth_manager = AuthManager::new("test-secret".to_string());
+    let jwt_secret = std::env::var("JWT_SECRET").unwrap_or_else(|_| "test-secret".to_string());
+    let mut auth_manager = AuthManager::new(jwt_secret);
 
     // Criar usuário e autenticar
     let user = auth_manager
@@ -206,7 +211,7 @@ async fn test_token_refresh() {
         .create_user(
             "testuser".to_string(),
             "test@example.com".to_string(),
-            "password123".to_string(),
+            std::env::var("TEST_PASSWORD").unwrap_or_else(|_| "password123".to_string()),
         )
         .await
         .unwrap();
@@ -217,7 +222,7 @@ async fn test_token_refresh() {
         .await
         .unwrap();
     let auth_result = auth_manager
-        .authenticate("testuser", "password123")
+        .authenticate("testuser", &std::env::var("TEST_PASSWORD").unwrap_or_else(|_| "password123".to_string()))
         .await
         .unwrap();
 
@@ -233,7 +238,8 @@ async fn test_token_refresh() {
 
 #[tokio::test]
 async fn test_logout() {
-    let mut auth_manager = AuthManager::new("test-secret".to_string());
+    let jwt_secret = std::env::var("JWT_SECRET").unwrap_or_else(|_| "test-secret".to_string());
+    let mut auth_manager = AuthManager::new(jwt_secret);
 
     // Criar usuário e autenticar
     let user = auth_manager
@@ -241,7 +247,7 @@ async fn test_logout() {
         .create_user(
             "testuser".to_string(),
             "test@example.com".to_string(),
-            "password123".to_string(),
+            std::env::var("TEST_PASSWORD").unwrap_or_else(|_| "password123".to_string()),
         )
         .await
         .unwrap();
@@ -252,7 +258,7 @@ async fn test_logout() {
         .await
         .unwrap();
     let auth_result = auth_manager
-        .authenticate("testuser", "password123")
+        .authenticate("testuser", &std::env::var("TEST_PASSWORD").unwrap_or_else(|_| "password123".to_string()))
         .await
         .unwrap();
 
@@ -266,7 +272,8 @@ async fn test_logout() {
 
 #[tokio::test]
 async fn test_invalid_token() {
-    let auth_manager = AuthManager::new("test-secret".to_string());
+    let jwt_secret = std::env::var("JWT_SECRET").unwrap_or_else(|_| "test-secret".to_string());
+    let auth_manager = AuthManager::new(jwt_secret);
 
     // Tentar validar token inválido
     let result = auth_manager.validate_token("invalid-token").await;
@@ -282,7 +289,7 @@ async fn test_duplicate_user_creation() {
         .create_user(
             "testuser".to_string(),
             "test@example.com".to_string(),
-            "password123".to_string(),
+            std::env::var("TEST_PASSWORD").unwrap_or_else(|_| "password123".to_string()),
         )
         .await
         .unwrap();
@@ -292,7 +299,7 @@ async fn test_duplicate_user_creation() {
         .create_user(
             "testuser".to_string(),
             "test2@example.com".to_string(),
-            "password123".to_string(),
+            std::env::var("TEST_PASSWORD").unwrap_or_else(|_| "password123".to_string()),
         )
         .await;
     assert!(result.is_err());
@@ -302,7 +309,7 @@ async fn test_duplicate_user_creation() {
         .create_user(
             "testuser2".to_string(),
             "test@example.com".to_string(),
-            "password123".to_string(),
+            std::env::var("TEST_PASSWORD").unwrap_or_else(|_| "password123".to_string()),
         )
         .await;
     assert!(result.is_err());

@@ -113,7 +113,7 @@ impl DashboardManager {
         };
 
         self.dashboards.insert(dashboard_id.clone(), dashboard);
-        println!("📊 Dashboard criado: {} ({})", name, dashboard_id);
+        println!(" Dashboard criado: {} ({})", name, dashboard_id);
 
         Ok(dashboard_id)
     }
@@ -152,7 +152,7 @@ impl DashboardManager {
             .as_secs();
 
         println!(
-            "📊 Widget adicionado ao dashboard {}: {} ({})",
+            " Widget adicionado ao dashboard {}: {} ({})",
             dashboard_id, title, widget_id
         );
 

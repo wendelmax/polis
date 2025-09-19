@@ -5,7 +5,7 @@
 
 set -e
 
-echo "🔍 Polis CI Check Script"
+echo " Polis CI Check Script"
 echo "========================"
 
 # Colors for output
@@ -114,4 +114,4 @@ else
     print_warning "cargo-llvm-cov not installed. Install with: cargo install cargo-llvm-cov"
 fi
 
-print_success "All checks completed successfully! 🎉"
+print_success "All checks completed successfully! "

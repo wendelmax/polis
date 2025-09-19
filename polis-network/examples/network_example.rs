@@ -8,11 +8,11 @@ use std::net::{IpAddr, Ipv4Addr};
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    println!("🌐 Exemplo do Sistema de Rede do Polis");
+    println!("� Exemplo do Sistema de Rede do Polis");
     println!("=====================================\n");
 
     // 1. Gerenciamento de Bridges
-    println!("1. 🌉 Configurando Bridges...");
+    println!("1. � Configurando Bridges...");
     let mut bridge_manager = BridgeManager::new();
 
     // Criar bridge padrão
@@ -25,13 +25,13 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     // Listar bridges
     let bridges = bridge_manager.list_bridges().await?;
-    println!("   📋 Bridges criadas: {}", bridges.len());
+    println!("   � Bridges criadas: {}", bridges.len());
     for bridge in &bridges {
         println!("   - {}: {} ({})", bridge.name, bridge.ip, bridge.subnet);
     }
 
     // 2. Gerenciamento de IPAM
-    println!("\n2. 📊 Configurando IPAM...");
+    println!("\n2.  Configurando IPAM...");
     let mut ipam_manager = IpamManager::new();
 
     // Criar pools de IP
@@ -48,19 +48,19 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .allocate_ip("container-2", Some("custom"))
         .await?;
 
-    println!("   📋 Alocações de IP:");
+    println!("   � Alocações de IP:");
     println!("   - {}: {}", allocation1.container_id, allocation1.ip);
     println!("   - {}: {}", allocation2.container_id, allocation2.ip);
 
     // Estatísticas do pool
     let stats = ipam_manager.get_pool_stats(None).await?;
     println!(
-        "   📊 Pool '{}': {} IPs alocados, {} disponíveis",
+        "    Pool '{}': {} IPs alocados, {} disponíveis",
         stats.name, stats.allocated_ips, stats.available_ips
     );
 
     // 3. Gerenciamento de Firewall
-    println!("\n3. 🔥 Configurando Firewall...");
+    println!("\n3. � Configurando Firewall...");
     let mut firewall_manager = FirewallManager::new();
 
     // Criar regras para containers
@@ -90,19 +90,19 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     // Listar regras
     let rules = firewall_manager.list_rules(Some("POLIS-FILTER")).await?;
-    println!("   📋 Regras do firewall: {}", rules.len());
+    println!("   � Regras do firewall: {}", rules.len());
 
     // Estatísticas
     let chain_stats = firewall_manager
         .get_chain_stats(Some("POLIS-FILTER"))
         .await?;
     println!(
-        "   📊 Chain '{}': {} regras ({} allow, {} deny)",
+        "    Chain '{}': {} regras ({} allow, {} deny)",
         chain_stats.name, chain_stats.total_rules, chain_stats.allow_rules, chain_stats.deny_rules
     );
 
     // 4. Gerenciamento de DNS
-    println!("\n4. 🌐 Configurando DNS...");
+    println!("\n4. � Configurando DNS...");
     let mut dns_manager = DnsManager::new();
 
     // Criar registros para containers
@@ -126,23 +126,23 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     match web_records {
         Ok(records) => {
             if let Some(record) = records.first() {
-                println!("   🔍 Resolução: web -> {}", record.value);
+                println!("    Resolução: web -> {}", record.value);
             }
         }
         Err(e) => {
-            println!("   ⚠️  Erro na resolução: {}", e);
+            println!("   ⚠  Erro na resolução: {}", e);
         }
     }
 
     // Estatísticas da zona
     let zone_stats = dns_manager.get_zone_stats(Some("container.local")).await?;
     println!(
-        "   📊 Zona '{}': {} registros",
+        "    Zona '{}': {} registros",
         zone_stats.name, zone_stats.total_records
     );
 
     // 5. Port Forwarding
-    println!("\n5. 🔀 Configurando Port Forwarding...");
+    println!("\n5. � Configurando Port Forwarding...");
     let mut port_manager = PortForwardingManager::new();
 
     // Criar port forwarding para containers
@@ -166,19 +166,19 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .await?;
 
     println!(
-        "   📋 Port forwarding criado: {} regras",
+        "   � Port forwarding criado: {} regras",
         range_rules.len() + 2
     );
 
     // Estatísticas
     let pf_stats = port_manager.get_stats().await?;
     println!(
-        "   📊 Port Forwarding: {} regras ativas ({} TCP, {} UDP)",
+        "    Port Forwarding: {} regras ativas ({} TCP, {} UDP)",
         pf_stats.active_rules, pf_stats.tcp_rules, pf_stats.udp_rules
     );
 
     // 6. Configuração de Rede de Container
-    println!("\n6. 🐳 Configurando Rede de Container...");
+    println!("\n6. � Configurando Rede de Container...");
 
     // Simular configuração de rede para container
     bridge_manager
@@ -200,10 +200,10 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .create_container_record("test-container", allocation1.ip)
         .await?;
 
-    println!("   ✅ Rede do container configurada completamente");
+    println!("    Rede do container configurada completamente");
 
     // 7. Limpeza
-    println!("\n7. 🧹 Limpando recursos...");
+    println!("\n7. � Limpando recursos...");
 
     // Desalocar IPs
     ipam_manager.deallocate_ip("container-1", None).await?;
@@ -219,10 +219,10 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .cleanup_container_network("test-container")
         .await?;
 
-    println!("   ✅ Recursos de rede limpos");
+    println!("    Recursos de rede limpos");
 
-    println!("\n✅ Exemplo de rede concluído com sucesso!");
-    println!("\n🌐 Recursos de Rede Implementados:");
+    println!("\n Exemplo de rede concluído com sucesso!");
+    println!("\n� Recursos de Rede Implementados:");
     println!("   - Gerenciamento de bridges com interfaces virtuais");
     println!("   - IPAM com pools de IP e alocação dinâmica");
     println!("   - Firewall com regras por container, porta e IP");

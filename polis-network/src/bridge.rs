@@ -59,13 +59,13 @@ impl BridgeManager {
         };
 
         self.bridges.insert(name.to_string(), bridge);
-        println!("🌉 Bridge '{}' criada: {} ({})", name, ip, subnet);
+        println!("� Bridge '{}' criada: {} ({})", name, ip, subnet);
         Ok(())
     }
 
     pub async fn delete_bridge(&mut self, name: &str) -> Result<()> {
         if self.bridges.remove(name).is_some() {
-            println!("🌉 Bridge '{}' removida", name);
+            println!("� Bridge '{}' removida", name);
             Ok(())
         } else {
             Err(PolisError::Network(format!(
@@ -83,7 +83,7 @@ impl BridgeManager {
         if !bridge.interfaces.contains(&interface_name.to_string()) {
             bridge.interfaces.push(interface_name.to_string());
             println!(
-                "🌉 Interface '{}' adicionada à bridge '{}'",
+                "� Interface '{}' adicionada à bridge '{}'",
                 interface_name, bridge_name
             );
         }
@@ -102,7 +102,7 @@ impl BridgeManager {
 
         bridge.interfaces.retain(|iface| iface != interface_name);
         println!(
-            "🌉 Interface '{}' removida da bridge '{}'",
+            "� Interface '{}' removida da bridge '{}'",
             interface_name, bridge_name
         );
         Ok(())
@@ -111,7 +111,7 @@ impl BridgeManager {
     pub async fn enable_bridge(&mut self, name: &str) -> Result<()> {
         if let Some(bridge) = self.bridges.get_mut(name) {
             bridge.enabled = true;
-            println!("🌉 Bridge '{}' habilitada", name);
+            println!("� Bridge '{}' habilitada", name);
             Ok(())
         } else {
             Err(PolisError::Network(format!(
@@ -124,7 +124,7 @@ impl BridgeManager {
     pub async fn disable_bridge(&mut self, name: &str) -> Result<()> {
         if let Some(bridge) = self.bridges.get_mut(name) {
             bridge.enabled = false;
-            println!("🌉 Bridge '{}' desabilitada", name);
+            println!("� Bridge '{}' desabilitada", name);
             Ok(())
         } else {
             Err(PolisError::Network(format!(
@@ -180,7 +180,7 @@ impl BridgeManager {
         self.add_interface(&bridge_name, &interface_name).await?;
 
         println!(
-            "🌉 Rede do container configurada: {} -> {}",
+            "� Rede do container configurada: {} -> {}",
             container_id, container_ip
         );
         Ok(())
@@ -193,7 +193,7 @@ impl BridgeManager {
         // Remove interface from bridge
         self.remove_interface(&bridge_name, &interface_name).await?;
 
-        println!("🌉 Rede do container limpa: {}", container_id);
+        println!("� Rede do container limpa: {}", container_id);
         Ok(())
     }
 }

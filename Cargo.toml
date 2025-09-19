@@ -16,6 +16,8 @@ members = [
     "polis-optimization",
     "polis-sdk",
     "polis-tests",
+    "polis-stats",
+    "polis-build",
 ]
 
 [workspace.package]
@@ -44,7 +46,7 @@ async-trait = "0.1"
 bytes = "1.0"
 futures = "0.3"
 hyper = { version = "1.7", features = ["full"] }
-tonic = { version = "0.14", features = ["tls"] }
+tonic = "0.14"
 prost = "0.14"
 nix = "0.30"
 libc = "0.2"
@@ -62,6 +64,7 @@ walkdir = "2.4"
 jsonwebtoken = "9.2"
 argon2 = "0.5"
 rand = "0.9"
+getrandom = "0.2"
 
 # Development dependencies
 [workspace.dependencies.criterion]

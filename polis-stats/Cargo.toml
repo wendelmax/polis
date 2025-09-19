@@ -1,0 +1,49 @@
+[package]
+name = "polis-stats"
+version = "0.1.0"
+edition = "2021"
+authors = ["Polis Team <team@polis.dev>"]
+description = "Container statistics and monitoring for Polis"
+license = "MIT"
+repository = "https://github.com/polis-dev/polis"
+keywords = ["container", "stats", "monitoring", "metrics"]
+categories = ["os::linux-apis", "development-tools::profiling"]
+
+[dependencies]
+# Core dependencies
+polis-core = { path = "../polis-core" }
+tokio = { version = "1.0", features = ["full"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+chrono = { version = "0.4", features = ["serde"] }
+uuid = { version = "1.0", features = ["v4", "serde"] }
+
+# System monitoring
+sysinfo = "0.30"
+# procfs = "0.16"  # Linux only
+# libc = "0.2"     # Linux only
+
+# Async and error handling
+async-trait = "0.1"
+thiserror = "1.0"
+anyhow = "1.0"
+
+# Logging
+tracing = "0.1"
+tracing-subscriber = "0.3"
+
+# Collections
+dashmap = "5.5"
+indexmap = "2.0"
+
+# Random number generation
+rand = "0.8"
+num_cpus = "1.0"
+
+[dev-dependencies]
+tokio-test = "0.4"
+criterion = { version = "0.5", features = ["html_reports"] }
+
+# [[bench]]
+# name = "stats_bench"
+# harness = false

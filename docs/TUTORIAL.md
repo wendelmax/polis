@@ -1,327 +1,433 @@
-# Tutorial do Polis - Guia Prático
+# Tutorial Completo do Polis
 
-## Introdução
+Este tutorial guia você através dos conceitos básicos e avançados do Polis Container Runtime, desde a instalação até o uso em produção.
 
-Este tutorial guia você através dos conceitos básicos do Polis, desde a instalação até a execução de aplicações complexas em containers.
+## 📚 Índice
 
-## Pré-requisitos
+1. [Introdução](#introdução)
+2. [Instalação](#instalação)
+3. [Primeiros Passos](#primeiros-passos)
+4. [Gerenciamento de Containers](#gerenciamento-de-containers)
+5. [Gerenciamento de Imagens](#gerenciamento-de-imagens)
+6. [Rede e Conectividade](#rede-e-conectividade)
+7. [Armazenamento e Volumes](#armazenamento-e-volumes)
+8. [Orquestração](#orquestração)
+9. [Monitoramento](#monitoramento)
+10. [Segurança](#segurança)
+11. [APIs](#apis)
+12. [Exemplos Práticos](#exemplos-práticos)
 
-- Linux (Ubuntu 20.04+ recomendado)
-- Rust 1.70+
-- Git
-- Privilégios de root (para algumas operações)
+## 🚀 Introdução
 
-## Instalação
+### O que é o Polis?
 
-### 1. Instalar Rust
+O Polis é um container runtime moderno e eficiente escrito em Rust, projetado para ser uma alternativa profissional ao Docker com foco em performance, segurança e simplicidade.
+
+### Características Principais
+
+- **Performance**: Inicialização rápida e baixo overhead
+- **Segurança**: Isolamento robusto com namespaces e cgroups
+- **Simplicidade**: Interface CLI intuitiva
+- **Compatibilidade**: Suporte completo ao padrão OCI
+- **Modularidade**: Arquitetura baseada em componentes
+
+### Conceitos Básicos
+
+- **Container**: Ambiente isolado que executa aplicações
+- **Imagem**: Template para criar containers
+- **Registry**: Repositório de imagens
+- **Volume**: Armazenamento persistente
+- **Rede**: Conectividade entre containers
+
+## 📦 Instalação
+
+### Instalação Rápida
 
 ```bash
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-source ~/.cargo/env
-rustup update
+# Windows
+.\installers\windows\install.ps1
+
+# Linux/macOS
+./installers/linux/install.sh
 ```
 
-### 2. Clonar e Compilar Polis
+### Instalação Manual
 
 ```bash
+# Clone o repositório
 git clone https://github.com/polis/polis.git
 cd polis
+
+# Compile
 cargo build --release
+
+# Instale
+sudo cp target/release/polis* /usr/local/bin/
 ```
 
-### 3. Instalar Binários
+### Verificação
 
 ```bash
-sudo cp target/release/polis /usr/local/bin/
-sudo cp target/release/polis-api /usr/local/bin/
-sudo cp target/release/polis-grpc /usr/local/bin/
-```
-
-### 4. Verificar Instalação
-
-```bash
+# Verificar instalação
 polis --version
-polis system info
+polis-api --version
+polis-grpc --version
 ```
 
-## Primeiros Passos
+## 🎯 Primeiros Passos
 
-### 1. Inicializar Polis
+### 1. Inicializar o Polis
 
 ```bash
-# Inicializar configuração padrão
+# Inicializar configuração
 polis init
 
-# Verificar status
-polis system info
+# Verificar configuração
+polis config show
 ```
 
-### 2. Baixar Primeira Imagem
+### 2. Primeiro Container
 
 ```bash
-# Baixar imagem Alpine
-polis pull alpine:latest
+# Baixar uma imagem
+polis image pull alpine:latest
 
-# Listar imagens
-polis images
+# Criar um container
+polis container create --name hello --image alpine:latest --command "echo 'Olá, Polis!'"
+
+# Executar o container
+polis container start hello
+
+# Ver logs
+polis container logs hello
+
+# Limpar
+polis container stop hello
+polis container remove hello
 ```
 
-### 3. Criar Primeiro Container
+### 3. Explorar o Sistema
+
+```bash
+# Ver informações do sistema
+polis system info
+
+# Ver status dos serviços
+polis system status
+
+# Ver configuração
+polis config show
+```
+
+## 🐳 Gerenciamento de Containers
+
+### Criar e Executar Containers
 
 ```bash
 # Criar container simples
-polis create --name hello-world --image alpine:latest --command "echo Hello Polis!"
+polis container create --name nginx --image nginx:alpine
 
-# Iniciar container
-polis start hello-world
+# Criar com comando personalizado
+polis container create --name app --image alpine:latest --command "sleep 3600"
 
-# Verificar status
-polis list
+# Criar com variáveis de ambiente
+polis container create --name web --image nginx:alpine \
+  --env NGINX_HOST=localhost \
+  --env NGINX_PORT=8080
+
+# Criar com mapeamento de porta
+polis container create --name web --image nginx:alpine --port 8080:80
+
+# Executar container
+polis container start nginx
 ```
 
-## Conceitos Básicos
-
-### Containers
-
-Um container no Polis é uma unidade de execução isolada que contém uma aplicação e suas dependências.
-
-#### Estados do Container
-- **Created**: Container criado mas não iniciado
-- **Running**: Container em execução
-- **Stopped**: Container parado
-- **Paused**: Container pausado
-- **Removed**: Container removido
-
-#### Comandos Básicos
+### Gerenciar Containers
 
 ```bash
-# Criar container
-polis create --name meu-app --image nginx:alpine
-
-# Iniciar container
-polis start meu-app
-
-# Parar container
-polis stop meu-app
-
-# Remover container
-polis remove meu-app
-
 # Listar containers
-polis list
+polis container list
+
+# Listar todos (incluindo parados)
+polis container list --all
+
+# Ver detalhes de um container
+polis container inspect nginx
 
 # Ver logs
-polis logs meu-app
+polis container logs nginx
 
-# Inspecionar container
-polis inspect meu-app
+# Seguir logs em tempo real
+polis container logs --follow nginx
+
+# Executar comando em container rodando
+polis container exec nginx sh
+
+# Parar container
+polis container stop nginx
+
+# Reiniciar container
+polis container restart nginx
+
+# Remover container
+polis container remove nginx
+
+# Remover container parado
+polis container remove --force nginx
 ```
 
-### Imagens
+### Configuração Avançada
 
-Imagens são templates read-only usados para criar containers.
+```bash
+# Criar com limites de recursos
+polis container create --name app --image alpine:latest \
+  --memory-limit 512m \
+  --cpu-limit 0.5
 
-#### Comandos de Imagem
+# Criar com volume montado
+polis container create --name app --image alpine:latest \
+  --volume /host/path:/container/path
+
+# Criar com rede personalizada
+polis container create --name app --image alpine:latest \
+  --network mynetwork
+
+# Criar com perfil de segurança
+polis container create --name app --image alpine:latest \
+  --security-profile apparmor:docker-default
+```
+
+## 🖼️ Gerenciamento de Imagens
+
+### Baixar Imagens
 
 ```bash
 # Baixar imagem
-polis pull nginx:alpine
+polis image pull alpine:latest
 
-# Listar imagens
-polis images
+# Baixar de registry específico
+polis image pull registry.example.com/app:1.0
 
-# Inspecionar imagem
-polis inspect nginx:alpine
-
-# Remover imagem
-polis rmi nginx:alpine
+# Baixar com autenticação
+polis image pull --username user --password pass private-registry.com/app:1.0
 ```
 
-### Redes
+### Gerenciar Imagens
 
-Polis permite criar redes personalizadas para conectar containers.
+```bash
+# Listar imagens
+polis image list
 
-#### Comandos de Rede
+# Ver detalhes de uma imagem
+polis image inspect alpine:latest
+
+# Ver histórico de uma imagem
+polis image history alpine:latest
+
+# Remover imagem
+polis image remove alpine:latest
+
+# Remover imagens não utilizadas
+polis image cleanup
+
+# Remover imagens antigas
+polis image cleanup --older-than 7d
+```
+
+### Build de Imagens
+
+```bash
+# Build a partir de Dockerfile
+polis build -t myapp:1.0 .
+
+# Build com contexto específico
+polis build -t myapp:1.0 /path/to/context
+
+# Build com argumentos
+polis build -t myapp:1.0 --build-arg VERSION=1.0 .
+
+# Build com cache
+polis build -t myapp:1.0 --cache-from myapp:latest .
+```
+
+### Configurar Registries
+
+```bash
+# Adicionar registry
+polis registry add docker.io --username user --password token
+
+# Listar registries
+polis registry list
+
+# Remover registry
+polis registry remove docker.io
+
+# Testar conectividade
+polis registry ping docker.io
+```
+
+## 🌐 Rede e Conectividade
+
+### Gerenciar Redes
 
 ```bash
 # Criar rede
-polis network create --name minha-rede --subnet 192.168.1.0/24
+polis network create --name mynet --subnet 172.20.0.0/16
 
 # Listar redes
 polis network list
 
+# Ver detalhes da rede
+polis network inspect mynet
+
 # Conectar container à rede
-polis network connect minha-rede meu-app
+polis network connect mynet container1
 
 # Desconectar container da rede
-polis network disconnect minha-rede meu-app
+polis network disconnect mynet container1
 
 # Remover rede
-polis network remove minha-rede
+polis network remove mynet
 ```
 
-## Exemplos Práticos
-
-### Exemplo 1: Servidor Web Simples
+### Port Forwarding
 
 ```bash
-# 1. Baixar imagem Nginx
-polis pull nginx:alpine
+# Mapear porta
+polis container create --name web --image nginx:alpine --port 8080:80
 
-# 2. Criar container
-polis create \
-  --name web-server \
-  --image nginx:alpine \
+# Adicionar port forwarding
+polis port-forward add --container web --host-port 8080 --container-port 80
+
+# Listar port forwards
+polis port-forward list
+
+# Remover port forward
+polis port-forward remove web:8080
+```
+
+### DNS e Resolução
+
+```bash
+# Criar registro DNS
+polis dns add --name app.local --ip 172.20.0.10
+
+# Listar registros DNS
+polis dns list
+
+# Resolver nome
+polis dns resolve app.local
+```
+
+## 💾 Armazenamento e Volumes
+
+### Gerenciar Volumes
+
+```bash
+# Criar volume
+polis volume create --name mydata
+
+# Listar volumes
+polis volume list
+
+# Ver detalhes do volume
+polis volume inspect mydata
+
+# Montar volume em container
+polis container create --name app --image alpine:latest \
+  --volume mydata:/data
+
+# Remover volume
+polis volume remove mydata
+```
+
+### Configuração de Volumes
+
+```bash
+# Criar volume com opções
+polis volume create --name mydata \
+  --driver local \
+  --opt type=tmpfs \
+  --opt device=tmpfs
+
+# Criar volume com labels
+polis volume create --name mydata \
+  --label env=production \
+  --label app=web
+```
+
+## 🎛️ Orquestração
+
+### Deploy de Aplicações
+
+```bash
+# Deploy simples
+polis deploy create --name webapp --image nginx:alpine --replicas 3
+
+# Deploy com configuração
+polis deploy create --name webapp --image nginx:alpine \
+  --replicas 3 \
   --port 8080:80 \
-  --env NGINX_HOST=localhost \
-  --env NGINX_PORT=80
+  --env NGINX_HOST=localhost
 
-# 3. Iniciar container
-polis start web-server
+# Listar deployments
+polis deploy list
 
-# 4. Verificar se está funcionando
-curl http://localhost:8080
+# Ver status do deployment
+polis deploy status webapp
 
-# 5. Ver logs
-polis logs web-server
+# Escalar deployment
+polis deploy scale webapp 5
 
-# 6. Parar e remover
-polis stop web-server
-polis remove web-server
+# Remover deployment
+polis deploy remove webapp
 ```
 
-### Exemplo 2: Aplicação com Banco de Dados
+### Service Discovery
 
 ```bash
-# 1. Criar rede para a aplicação
-polis network create --name app-network --subnet 172.20.0.0/16
+# Registrar serviço
+polis service register --name web --port 8080 --target nginx
 
-# 2. Criar container do banco de dados
-polis create \
-  --name database \
-  --image postgres:13 \
-  --network app-network \
-  --env POSTGRES_DB=myapp \
-  --env POSTGRES_USER=user \
-  --env POSTGRES_PASSWORD=password \
-  --volume postgres_data:/var/lib/postgresql/data
+# Listar serviços
+polis service list
 
-# 3. Criar container da aplicação
-polis create \
-  --name web-app \
-  --image node:16-alpine \
-  --network app-network \
-  --port 3000:3000 \
-  --env DATABASE_URL=postgres://user:password@database:5432/myapp \
-  --volume ./app:/app \
-  --command "npm start"
+# Ver detalhes do serviço
+polis service inspect web
 
-# 4. Iniciar containers
-polis start database
-polis start web-app
-
-# 5. Verificar conectividade
-polis network test app-network
-
-# 6. Ver logs de ambos
-polis logs database
-polis logs web-app
+# Remover serviço
+polis service remove web
 ```
 
-### Exemplo 3: Aplicação com Múltiplos Serviços
+### Load Balancing
 
 ```bash
-# 1. Criar rede
-polis network create --name microservices --subnet 172.30.0.0/16
+# Configurar load balancer
+polis load-balancer create --name lb --port 80 --targets web:8080
 
-# 2. Criar serviço de API
-polis create \
-  --name api-service \
-  --image python:3.9-alpine \
-  --network microservices \
-  --port 8000:8000 \
-  --env FLASK_ENV=production \
-  --command "python app.py"
+# Listar load balancers
+polis load-balancer list
 
-# 3. Criar serviço de cache
-polis create \
-  --name cache-service \
-  --image redis:alpine \
-  --network microservices \
-  --port 6379:6379
+# Adicionar target
+polis load-balancer add-target lb web2:8080
 
-# 4. Criar serviço de frontend
-polis create \
-  --name frontend \
-  --image nginx:alpine \
-  --network microservices \
-  --port 80:80 \
-  --volume ./dist:/usr/share/nginx/html
-
-# 5. Iniciar todos os serviços
-polis start cache-service
-polis start api-service
-polis start frontend
-
-# 6. Verificar status
-polis list
+# Remover target
+polis load-balancer remove-target lb web2:8080
 ```
 
-## Configuração Avançada
-
-### Arquivo de Configuração
-
-Crie um arquivo `polis.yaml`:
-
-```yaml
-runtime:
-  max_containers: 100
-  container_timeout: 30
-  log_level: "info"
-  root_dir: "/var/lib/polis"
-
-storage:
-  root_dir: "/var/lib/polis/storage"
-  max_size: 107374182400  # 100GB
-
-network:
-  bridge_name: "polis0"
-  subnet: "172.17.0.0/16"
-  gateway: "172.17.0.1"
-
-security:
-  drop_capabilities: ["SYS_ADMIN"]
-  read_only_rootfs: false
-  enable_seccomp: true
-  enable_capabilities: true
-  enable_namespaces: true
-  enable_cgroups: true
-
-api:
-  rest_port: 8080
-  grpc_port: 9090
-  host: "0.0.0.0"
-```
-
-### Usar Configuração Personalizada
-
-```bash
-polis --config polis.yaml create --name meu-app --image alpine:latest
-```
-
-## Monitoramento
+## 📊 Monitoramento
 
 ### Métricas do Sistema
 
 ```bash
-# Ver métricas gerais
-polis metrics system
+# Ver métricas do sistema
+polis stats system
 
 # Ver métricas de um container
-polis metrics container meu-app
+polis stats container nginx
 
-# Monitorar em tempo real
-polis metrics watch
+# Ver métricas em tempo real
+polis stats container --follow nginx
 ```
 
 ### Health Checks
@@ -331,29 +437,58 @@ polis metrics watch
 polis health
 
 # Verificar saúde de um container
-polis health container meu-app
+polis health container nginx
 
 # Configurar health check
-polis health set meu-app --interval 30s --timeout 10s --retries 3
+polis container create --name app --image nginx:alpine \
+  --health-check "curl -f http://localhost/health"
 ```
 
 ### Logs
 
 ```bash
 # Ver logs de um container
-polis logs meu-app
+polis container logs nginx
 
 # Seguir logs em tempo real
-polis logs --follow meu-app
+polis container logs --follow nginx
 
 # Ver logs com filtro
-polis logs meu-app --level error
-
-# Exportar logs
-polis logs --export meu-app > logs.txt
+polis container logs --since 1h nginx
 ```
 
-## APIs
+## 🔒 Segurança
+
+### Configuração de Segurança
+
+```bash
+# Criar container com perfil de segurança
+polis container create --name secure --image alpine:latest \
+  --security-profile apparmor:docker-default
+
+# Criar com capabilities limitadas
+polis container create --name secure --image alpine:latest \
+  --cap-drop ALL --cap-add NET_BIND_SERVICE
+
+# Criar com usuário não-root
+polis container create --name secure --image alpine:latest \
+  --user 1000:1000
+```
+
+### Autenticação
+
+```bash
+# Fazer login em registry
+polis login registry.example.com --username user --password pass
+
+# Fazer logout
+polis logout registry.example.com
+
+# Verificar autenticação
+polis auth status
+```
+
+## 🔌 APIs
 
 ### API REST
 
@@ -364,6 +499,7 @@ polis-api --port 8080
 # Testar API
 curl http://localhost:8080/api/v1/health
 curl http://localhost:8080/api/v1/containers
+curl http://localhost:8080/api/v1/images
 ```
 
 ### API gRPC
@@ -374,182 +510,98 @@ polis-grpc --port 9090
 
 # Testar com grpcurl
 grpcurl -plaintext localhost:9090 list
+grpcurl -plaintext localhost:9090 polis.ContainerService/ListContainers
 ```
 
-## Troubleshooting
+## 🏗️ Exemplos Práticos
 
-### Problemas Comuns
-
-#### 1. Container não inicia
+### Aplicação Web com Banco de Dados
 
 ```bash
-# Verificar logs
-polis logs container-name
+# 1. Criar rede
+polis network create --name app-net --subnet 172.20.0.0/16
 
-# Verificar configuração
-polis inspect container-name
+# 2. Criar banco de dados
+polis container create --name db --image postgres:13 \
+  --network app-net \
+  --env POSTGRES_DB=myapp \
+  --env POSTGRES_PASSWORD=secret \
+  --volume db-data:/var/lib/postgresql/data
 
-# Verificar recursos
-polis system stats
+# 3. Criar aplicação
+polis container create --name app --image node:16 \
+  --network app-net \
+  --port 3000:3000 \
+  --env DATABASE_URL=postgres://db:5432/myapp \
+  --volume app-code:/app
+
+# 4. Iniciar serviços
+polis container start db
+polis container start app
+
+# 5. Verificar status
+polis container list
 ```
 
-#### 2. Problemas de rede
+### Deploy com Load Balancer
 
 ```bash
-# Verificar redes
-polis network list
+# 1. Deploy da aplicação
+polis deploy create --name webapp --image nginx:alpine --replicas 3
 
-# Testar conectividade
-polis network test network-name
+# 2. Configurar load balancer
+polis load-balancer create --name lb --port 80 --targets webapp:80
 
-# Verificar port forwarding
-polis port list
+# 3. Verificar status
+polis deploy status webapp
+polis load-balancer status lb
 ```
 
-#### 3. Problemas de volume
+### Monitoramento Completo
 
 ```bash
-# Verificar volumes
-polis volume list
+# 1. Ver métricas do sistema
+polis stats system
 
-# Verificar montagens
-polis volume inspect volume-name
+# 2. Ver métricas dos containers
+polis stats container webapp
+
+# 3. Verificar saúde
+polis health
+
+# 4. Ver logs
+polis container logs --follow webapp
 ```
 
-### Debugging
+## 🎯 Próximos Passos
 
-```bash
-# Modo verbose
-polis --verbose create --name test alpine:latest
+### Recursos Avançados
 
-# Logs de debug
-polis --log-level debug start test
+1. **Configuração de Produção**: Configure para ambiente de produção
+2. **Monitoramento**: Implemente monitoramento completo
+3. **Segurança**: Aplique práticas de segurança avançadas
+4. **CI/CD**: Integre com pipelines de CI/CD
+5. **Orquestração**: Use orquestração avançada
 
-# Verificar status do sistema
-polis system info
-polis system stats
-```
+### Recursos de Aprendizado
 
-## Boas Práticas
+- **Documentação**: [docs.polis.dev](https://docs.polis.dev)
+- **Exemplos**: [examples.polis.dev](https://examples.polis.dev)
+- **Comunidade**: [discord.gg/polis](https://discord.gg/polis)
+- **GitHub**: [github.com/polis/polis](https://github.com/polis/polis)
 
-### 1. Nomenclatura
+## 📞 Suporte
 
-```bash
-# Use nomes descritivos
-polis create --name web-server-prod --image nginx:alpine
-polis create --name db-staging --image postgres:13
+### Canais de Suporte
+- **GitHub Issues**: [github.com/polis/polis/issues](https://github.com/polis/polis/issues)
+- **Discord**: [discord.gg/polis](https://discord.gg/polis)
+- **Stack Overflow**: [stackoverflow.com/tags/polis](https://stackoverflow.com/tags/polis)
+- **Email**: support@polis.dev
 
-# Use tags específicas
-polis pull nginx:1.21-alpine
-polis pull postgres:13.4-alpine
-```
+---
 
-### 2. Recursos
+**Última atualização**: Janeiro 2025  
+**Versão**: 1.0.0  
+**Status**: Ativa e mantida
 
-```bash
-# Defina limites de recursos
-polis create \
-  --name resource-limited \
-  --image alpine:latest \
-  --memory-limit 512m \
-  --cpu-quota 0.5 \
-  --pids-limit 100
-```
-
-### 3. Segurança
-
-```bash
-# Use imagens oficiais
-polis pull nginx:alpine
-polis pull postgres:13-alpine
-
-# Configure segurança
-polis create \
-  --name secure-app \
-  --image alpine:latest \
-  --read-only \
-  --no-new-privileges \
-  --user 1000:1000
-```
-
-### 4. Volumes
-
-```bash
-# Use volumes nomeados para dados persistentes
-polis volume create app-data
-polis create \
-  --name app \
-  --image alpine:latest \
-  --volume app-data:/data
-```
-
-### 5. Redes
-
-```bash
-# Crie redes específicas para cada aplicação
-polis network create --name frontend-net --subnet 172.20.0.0/16
-polis network create --name backend-net --subnet 172.21.0.0/16
-```
-
-## Próximos Passos
-
-### 1. Orquestração
-
-```bash
-# Usar Polis com Kubernetes
-kubectl apply -f polis-deployment.yaml
-
-# Usar Polis com Docker Compose
-docker-compose up -d
-```
-
-### 2. CI/CD
-
-```bash
-# Integrar com GitHub Actions
-name: Deploy with Polis
-on: [push]
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Deploy with Polis
-        run: |
-          polis create --name app --image ${{ github.sha }}
-          polis start app
-```
-
-### 3. Monitoramento Avançado
-
-```bash
-# Integrar com Prometheus
-polis metrics export --format prometheus --port 9090
-
-# Integrar com Grafana
-polis metrics dashboard --port 3000
-```
-
-## Recursos Adicionais
-
-### Documentação
-- [Referência da API](API_REST.md)
-- [Guia de Migração do Docker](MIGRATION_DOCKER.md)
-- [Exemplos Avançados](examples/)
-
-### Comunidade
-- [GitHub](https://github.com/polis/polis)
-- [Discord](https://discord.gg/polis)
-- [Stack Overflow](https://stackoverflow.com/tags/polis)
-
-### Suporte
-- [FAQ](FAQ.md)
-- [Issues](https://github.com/polis/polis/issues)
-- [Documentação Oficial](https://docs.polis.dev)
-
-## Conclusão
-
-Este tutorial cobriu os conceitos básicos do Polis. Para aprender mais, explore a documentação avançada e participe da comunidade.
-
-Lembre-se de sempre testar em ambiente de desenvolvimento antes de usar em produção!
-
+**Polis** - Container Runtime moderno, seguro e eficiente. Feito com ❤ no Brasil.

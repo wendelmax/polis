@@ -73,7 +73,7 @@ impl DnsManager {
         };
 
         self.zones.insert(name.to_string(), zone);
-        println!("🌐 Zona DNS '{}' criada (TTL: {})", name, ttl);
+        println!("� Zona DNS '{}' criada (TTL: {})", name, ttl);
         Ok(())
     }
 
@@ -90,7 +90,7 @@ impl DnsManager {
             .push(record.clone());
 
         println!(
-            "🌐 Registro DNS adicionado: {} {:?} -> {}",
+            "� Registro DNS adicionado: {} {:?} -> {}",
             record.name, record.record_type, record.value
         );
         Ok(())
@@ -115,7 +115,7 @@ impl DnsManager {
             }
         }
 
-        println!("🌐 Registro DNS removido: {} {:?}", name, record_type);
+        println!("� Registro DNS removido: {} {:?}", name, record_type);
         Ok(())
     }
 
@@ -208,7 +208,7 @@ impl DnsManager {
 
     pub async fn add_upstream_server(&mut self, server: IpAddr) -> Result<()> {
         self.upstream_servers.push(server);
-        println!("🌐 Servidor DNS upstream adicionado: {}", server);
+        println!("� Servidor DNS upstream adicionado: {}", server);
         Ok(())
     }
 

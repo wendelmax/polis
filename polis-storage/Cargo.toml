@@ -12,9 +12,11 @@ polis-core = { path = "../polis-core" }
 
 tokio = { workspace = true }
 serde = { workspace = true }
+serde_json = { workspace = true }
 anyhow = { workspace = true }
 thiserror = { workspace = true }
 tracing = { workspace = true }
 tempfile = { workspace = true }
 walkdir = { workspace = true }
+async-trait = { workspace = true }
 

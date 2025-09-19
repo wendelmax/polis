@@ -150,7 +150,7 @@ impl MetricsCollector {
         self.system_metrics
             .insert("current".to_string(), metrics.clone());
         println!(
-            "📊 Métricas do sistema coletadas: CPU {:.1}%, Memória {:.1}%",
+            " Métricas do sistema coletadas: CPU {:.1}%, Memória {:.1}%",
             metrics.cpu.usage_percent,
             (metrics.memory.used_bytes as f64 / metrics.memory.total_bytes as f64) * 100.0
         );
@@ -198,7 +198,7 @@ impl MetricsCollector {
         self.container_metrics
             .insert(container_id.to_string(), metrics.clone());
         println!(
-            "📊 Métricas do container {} coletadas: CPU {:.1}%, Memória {}MB",
+            " Métricas do container {} coletadas: CPU {:.1}%, Memória {}MB",
             container_id,
             metrics.cpu.usage_percent,
             metrics.memory.usage_bytes / 1024 / 1024

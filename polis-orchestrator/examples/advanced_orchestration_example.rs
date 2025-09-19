@@ -13,15 +13,15 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Initialize logging
     tracing_subscriber::fmt::init();
 
-    println!("🚀 Exemplo de Orquestração Avançada do Polis");
+    println!(" Exemplo de Orquestração Avançada do Polis");
     println!("=============================================");
 
     // 1. Service Discovery
-    println!("\n1. 🔍 Service Discovery");
+    println!("\n1.  Service Discovery");
     println!("------------------------");
 
     let service_discovery = ServiceDiscovery::new();
-    println!("   ✅ Service Discovery inicializado");
+    println!("    Service Discovery inicializado");
 
     // Criar serviço
     let service = Service::new(
@@ -46,29 +46,29 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     );
 
     service_discovery.register_service(service.clone()).await?;
-    println!("   ✅ Serviço registrado: {}", service.name);
+    println!("    Serviço registrado: {}", service.name);
 
     // Resolver serviço
     let endpoints = service_discovery
         .resolve_service("web-service", Some("default"))
         .await?;
-    println!("   ✅ Endpoints encontrados: {}", endpoints.len());
+    println!("    Endpoints encontrados: {}", endpoints.len());
     for endpoint in &endpoints {
         println!("     - {}:{}", endpoint.address, endpoint.port);
     }
 
     // 2. Load Balancer
-    println!("\n2. ⚖️ Load Balancer");
+    println!("\n2. ⚖ Load Balancer");
     println!("-------------------");
 
     let load_balancer = LoadBalancer::new(LoadBalancingAlgorithm::RoundRobin);
-    println!("   ✅ Load Balancer inicializado (Round Robin)");
+    println!("    Load Balancer inicializado (Round Robin)");
 
     // Adicionar endpoints
     for endpoint in endpoints {
         load_balancer.add_endpoint(endpoint).await;
     }
-    println!("   ✅ Endpoints adicionados ao load balancer");
+    println!("    Endpoints adicionados ao load balancer");
 
     // Simular requisições
     for i in 0..5 {
@@ -96,7 +96,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     // Obter estatísticas
     let stats = load_balancer.get_stats().await;
-    println!("   ✅ Estatísticas do Load Balancer:");
+    println!("    Estatísticas do Load Balancer:");
     println!("     - Total de requisições: {}", stats.total_requests);
     println!(
         "     - Requisições bem-sucedidas: {}",
@@ -105,11 +105,11 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     println!("     - Requisições falharam: {}", stats.failed_requests);
 
     // 3. Auto Scaling
-    println!("\n3. 📈 Auto Scaling");
+    println!("\n3.  Auto Scaling");
     println!("------------------");
 
     let auto_scaler = AutoScaler::new();
-    println!("   ✅ Auto Scaler inicializado");
+    println!("    Auto Scaler inicializado");
 
     // Criar deployment
     let deployment = Deployment::new(
@@ -132,7 +132,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     .with_label("app".to_string(), "web".to_string());
 
     auto_scaler.create_deployment(deployment).await?;
-    println!("   ✅ Deployment criado: {}", deployment.name);
+    println!("    Deployment criado: {}", deployment.name);
 
     // Criar política de scaling
     let scaling_policy = ScalingPolicy::new(
@@ -148,7 +148,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     .with_scale_down_cooldown(Duration::from_secs(600));
 
     auto_scaler.create_scaling_policy(scaling_policy).await?;
-    println!("   ✅ Política de scaling criada");
+    println!("    Política de scaling criada");
 
     // Simular métricas de alta utilização
     let high_usage_metrics = ScalingMetrics {
@@ -165,11 +165,11 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     auto_scaler
         .collect_metrics("web-deployment", high_usage_metrics)
         .await?;
-    println!("   ✅ Métricas de alta utilização coletadas");
+    println!("    Métricas de alta utilização coletadas");
 
     // Avaliar scaling
     let scaling_action = auto_scaler.evaluate_scaling("web-deployment").await?;
-    println!("   ✅ Ação de scaling avaliada:");
+    println!("    Ação de scaling avaliada:");
     println!("     - Tipo: {:?}", scaling_action.action_type);
     println!(
         "     - De {} para {} réplicas",
@@ -192,11 +192,11 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     auto_scaler
         .collect_metrics("web-deployment", low_usage_metrics)
         .await?;
-    println!("   ✅ Métricas de baixa utilização coletadas");
+    println!("    Métricas de baixa utilização coletadas");
 
     // Avaliar scaling novamente
     let scaling_action = auto_scaler.evaluate_scaling("web-deployment").await?;
-    println!("   ✅ Ação de scaling avaliada:");
+    println!("    Ação de scaling avaliada:");
     println!("     - Tipo: {:?}", scaling_action.action_type);
     println!(
         "     - De {} para {} réplicas",
@@ -205,11 +205,11 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     println!("     - Razão: {}", scaling_action.reason);
 
     // 4. Health Monitoring
-    println!("\n4. 🏥 Health Monitoring");
+    println!("\n4.  Health Monitoring");
     println!("------------------------");
 
     let health_monitor = HealthMonitor::new();
-    println!("   ✅ Health Monitor inicializado");
+    println!("    Health Monitor inicializado");
 
     // Criar health check HTTP
     let http_health_check = HealthCheck::new(
@@ -230,7 +230,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     health_monitor
         .create_health_check(http_health_check)
         .await?;
-    println!("   ✅ Health check HTTP criado");
+    println!("    Health check HTTP criado");
 
     // Criar health check TCP
     let tcp_health_check = HealthCheck::new(
@@ -244,7 +244,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     .with_timeout(Duration::from_secs(5));
 
     health_monitor.create_health_check(tcp_health_check).await?;
-    println!("   ✅ Health check TCP criado");
+    println!("    Health check TCP criado");
 
     // Criar health check de comando
     let cmd_health_check = HealthCheck::new(
@@ -261,18 +261,18 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     .with_timeout(Duration::from_secs(10));
 
     health_monitor.create_health_check(cmd_health_check).await?;
-    println!("   ✅ Health check de comando criado");
+    println!("    Health check de comando criado");
 
     // Executar health check manual
     let result = health_monitor.run_health_check("http-health-check").await?;
-    println!("   ✅ Health check executado:");
+    println!("    Health check executado:");
     println!("     - Status: {:?}", result.status);
     println!("     - Mensagem: {}", result.message);
     println!("     - Tempo de resposta: {:?}", result.response_time);
 
     // Obter resumo de saúde
     let summary = health_monitor.get_health_summary(None).await;
-    println!("   ✅ Resumo de saúde:");
+    println!("    Resumo de saúde:");
     println!("     - Status geral: {:?}", summary.overall_status);
     println!("     - Total de checks: {}", summary.total_checks);
     println!("     - Checks saudáveis: {}", summary.healthy_checks);
@@ -280,7 +280,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     // Obter estatísticas de saúde
     let stats = health_monitor.get_health_stats().await;
-    println!("   ✅ Estatísticas de saúde:");
+    println!("    Estatísticas de saúde:");
     println!("     - Total de checks: {}", stats.total_checks);
     println!("     - Checks saudáveis: {}", stats.healthy_checks);
     println!("     - Checks não saudáveis: {}", stats.unhealthy_checks);
@@ -296,11 +296,11 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     );
 
     // 5. Integração Completa
-    println!("\n5. 🔗 Integração Completa");
+    println!("\n5. � Integração Completa");
     println!("-------------------------");
 
     // Simular cenário completo
-    println!("   📊 Simulando cenário de produção...");
+    println!("    Simulando cenário de produção...");
 
     // Registrar múltiplos serviços
     for i in 1..=3 {
@@ -320,7 +320,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         service_discovery.register_service(service).await?;
     }
 
-    println!("   ✅ 3 serviços API registrados");
+    println!("    3 serviços API registrados");
 
     // Configurar load balancer para múltiplos serviços
     let api_endpoints = service_discovery
@@ -330,7 +330,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         load_balancer.add_endpoint(endpoint).await;
     }
 
-    println!("   ✅ Endpoints API adicionados ao load balancer");
+    println!("    Endpoints API adicionados ao load balancer");
 
     // Simular tráfego
     for i in 0..10 {
@@ -371,11 +371,11 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     auto_scaler
         .collect_metrics("web-deployment", production_metrics)
         .await?;
-    println!("   ✅ Métricas de produção coletadas");
+    println!("    Métricas de produção coletadas");
 
     // Avaliar scaling com métricas de produção
     let scaling_action = auto_scaler.evaluate_scaling("web-deployment").await?;
-    println!("   ✅ Ação de scaling com métricas de produção:");
+    println!("    Ação de scaling com métricas de produção:");
     println!("     - Tipo: {:?}", scaling_action.action_type);
     println!(
         "     - De {} para {} réplicas",
@@ -384,12 +384,12 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     println!("     - Razão: {}", scaling_action.reason);
 
     // 6. Relatório Final
-    println!("\n6. 📋 Relatório Final");
+    println!("\n6. � Relatório Final");
     println!("---------------------");
 
     // Service Discovery
     let services = service_discovery.list_services().await;
-    println!("   🔍 Service Discovery:");
+    println!("    Service Discovery:");
     println!("     - Total de serviços: {}", services.len());
     for service in &services {
         println!(
@@ -402,7 +402,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     // Load Balancer
     let lb_stats = load_balancer.get_stats().await;
-    println!("   ⚖️ Load Balancer:");
+    println!("   ⚖ Load Balancer:");
     println!("     - Total de requisições: {}", lb_stats.total_requests);
     println!(
         "     - Taxa de sucesso: {:.2}%",
@@ -415,7 +415,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     // Auto Scaling
     let deployments = auto_scaler.list_deployments().await;
-    println!("   📈 Auto Scaling:");
+    println!("    Auto Scaling:");
     println!("     - Total de deployments: {}", deployments.len());
     for deployment in &deployments {
         println!(
@@ -426,7 +426,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     // Health Monitoring
     let health_summary = health_monitor.get_health_summary(None).await;
-    println!("   🏥 Health Monitoring:");
+    println!("    Health Monitoring:");
     println!("     - Status geral: {:?}", health_summary.overall_status);
     println!("     - Total de checks: {}", health_summary.total_checks);
     println!("     - Checks saudáveis: {}", health_summary.healthy_checks);
@@ -435,7 +435,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         health_summary.unhealthy_checks
     );
 
-    println!("\n🎉 Exemplo de orquestração avançada concluído com sucesso!");
+    println!("\n Exemplo de orquestração avançada concluído com sucesso!");
     println!("=========================================================");
 
     Ok(())

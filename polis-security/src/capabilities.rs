@@ -76,7 +76,7 @@ impl CapabilityManager {
             self.current_caps.inheritable.remove(&cap);
         }
 
-        println!("🔒 Capabilities removidas: {:?}", caps_clone);
+        println!("� Capabilities removidas: {:?}", caps_clone);
         Ok(())
     }
 
@@ -88,13 +88,13 @@ impl CapabilityManager {
             self.current_caps.inheritable.insert(cap);
         }
 
-        println!("🔓 Capabilities adicionadas: {:?}", caps_clone);
+        println!("� Capabilities adicionadas: {:?}", caps_clone);
         Ok(())
     }
 
     pub async fn set_capabilities(&mut self, caps: CapabilitySet) -> Result<()> {
         self.current_caps = caps;
-        println!("🔧 Capabilities definidas");
+        println!(" Capabilities definidas");
         Ok(())
     }
 
@@ -127,7 +127,7 @@ impl CapabilityManager {
             inheritable: HashSet::new(),
         };
 
-        println!("🔒 Conjunto mínimo de capabilities definido");
+        println!("� Conjunto mínimo de capabilities definido");
         Ok(())
     }
 
@@ -180,7 +180,7 @@ impl CapabilityManager {
             inheritable: all_caps.iter().cloned().collect(),
         };
 
-        println!("🔓 Conjunto privilegiado de capabilities definido");
+        println!("� Conjunto privilegiado de capabilities definido");
         Ok(())
     }
 

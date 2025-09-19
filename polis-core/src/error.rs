@@ -31,6 +31,9 @@ pub enum PolisError {
 
     #[error("Authentication error: {0}")]
     Auth(String),
+
+    #[error("Configuration error: {0}")]
+    Config(String),
 }
 
 pub type Result<T> = std::result::Result<T, PolisError>;

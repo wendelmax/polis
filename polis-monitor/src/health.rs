@@ -127,7 +127,7 @@ impl HealthChecker {
         };
 
         println!(
-            "🏥 Health check concluído: {:?} ({} checks)",
+            " Health check concluído: {:?} ({} checks)",
             system_health.overall_status,
             system_health.checks.len()
         );
@@ -142,7 +142,7 @@ impl HealthChecker {
             match check_fn(container_id) {
                 Ok(health) => {
                     println!(
-                        "🏥 Container {} health check '{}': {:?}",
+                        " Container {} health check '{}': {:?}",
                         container_id, name, health.status
                     );
                     container_healths.push(health);

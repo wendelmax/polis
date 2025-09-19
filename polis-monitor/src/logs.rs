@@ -95,7 +95,7 @@ impl LogManager {
             self.logs.remove(0);
         }
 
-        println!("📝 Log adicionado: [{:?}] {} - {}", level, source, message);
+        println!(" Log adicionado: [{:?}] {} - {}", level, source, message);
 
         Ok(log_id)
     }
@@ -136,7 +136,7 @@ impl LogManager {
         }
 
         println!(
-            "📝 Log estruturado adicionado: [{:?}] {} - {}",
+            " Log estruturado adicionado: [{:?}] {} - {}",
             level, source, message
         );
 
@@ -322,7 +322,7 @@ impl LogManager {
         let removed_count = initial_count - self.logs.len();
 
         println!(
-            "🧹 {} logs antigos removidos (mais antigos que {} segundos)",
+            "� {} logs antigos removidos (mais antigos que {} segundos)",
             removed_count, older_than_seconds
         );
 

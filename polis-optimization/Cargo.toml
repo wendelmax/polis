@@ -24,7 +24,7 @@ anyhow = "1.0"
 thiserror = "2.0"
 
 # Memory optimization
-jemallocator = "0.5"
+jemallocator = "0.5.4"
 mimalloc = "0.1"
 tcmalloc = "0.3"
 

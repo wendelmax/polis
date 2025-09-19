@@ -1,4 +1,5 @@
-use argon2::password_hash::{rand_core::OsRng, SaltString};
+use argon2::password_hash::SaltString;
+use getrandom::getrandom;
 use argon2::{Argon2, PasswordHash, PasswordHasher, PasswordVerifier};
 use chrono::{DateTime, Utc};
 use polis_core::{PolisError, Result};
@@ -38,7 +39,8 @@ impl UserManager {
 
     fn create_default_admin(&mut self) {
         let admin_id = Uuid::new_v4();
-        let password_hash = Self::hash_password("admin123").unwrap();
+        let default_password = std::env::var("ADMIN_PASSWORD").unwrap_or_else(|_| "admin123".to_string());
+        let password_hash = Self::hash_password(&default_password).unwrap();
 
         let admin_user = User {
             id: admin_id,
@@ -202,7 +204,13 @@ impl UserManager {
     }
 
     fn hash_password(password: &str) -> Result<String> {
-        let salt = SaltString::generate(&mut OsRng);
+        let mut salt_bytes = [0u8; 16];
+        getrandom(&mut salt_bytes)
+            .map_err(|e| PolisError::Auth(format!("Erro ao gerar salt: {}", e)))?;
+        
+        let salt = SaltString::encode_b64(&salt_bytes)
+            .map_err(|e| PolisError::Auth(format!("Erro ao codificar salt: {}", e)))?;
+        
         let argon2 = Argon2::default();
 
         let password_hash = argon2

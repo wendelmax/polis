@@ -1,0 +1,7 @@
+namespace: "default"
+default_replicas: 1
+health_check_interval: 30s
+scaling_check_interval: 60s
+auto_scaling_enabled: true
+max_replicas: 10
+min_replicas: 1

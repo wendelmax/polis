@@ -95,7 +95,7 @@ impl FirewallManager {
 
         self.chains.insert(name.to_string(), chain);
         println!(
-            "🔥 Chain '{}' criada com ação padrão: {:?}",
+            "� Chain '{}' criada com ação padrão: {:?}",
             name, default_action
         );
         Ok(())
@@ -109,7 +109,7 @@ impl FirewallManager {
 
         chain.rules.push(rule.clone());
         println!(
-            "🔥 Regra adicionada à chain '{}': {:?}",
+            "� Regra adicionada à chain '{}': {:?}",
             chain_name, rule.action
         );
         Ok(())
@@ -122,7 +122,7 @@ impl FirewallManager {
             .ok_or_else(|| PolisError::Network(format!("Chain '{}' não encontrada", chain_name)))?;
 
         chain.rules.retain(|rule| rule.id != rule_id);
-        println!("🔥 Regra '{}' removida da chain '{}'", rule_id, chain_name);
+        println!("� Regra '{}' removida da chain '{}'", rule_id, chain_name);
         Ok(())
     }
 
@@ -246,7 +246,7 @@ impl FirewallManager {
             .ok_or_else(|| PolisError::Network(format!("Chain '{}' não encontrada", chain_name)))?;
 
         chain.rules.clear();
-        println!("🔥 Chain '{}' limpa", chain_name);
+        println!("� Chain '{}' limpa", chain_name);
         Ok(())
     }
 

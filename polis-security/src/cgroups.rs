@@ -51,7 +51,7 @@ impl CgroupManager {
         // In a real implementation, you would use cgroups v1/v2 APIs
 
         println!(
-            "🔧 Aplicando limites de recursos para cgroup: {}",
+            " Aplicando limites de recursos para cgroup: {}",
             cgroup_info.name
         );
 
@@ -78,7 +78,7 @@ impl CgroupManager {
             .ok_or_else(|| PolisError::Security("Cgroup não encontrado".to_string()))?;
 
         // This is a simplified implementation for demonstration
-        println!("🔧 Adicionando processo {} ao cgroup {}", pid, cgroup_name);
+        println!(" Adicionando processo {} ao cgroup {}", pid, cgroup_name);
         Ok(())
     }
 
@@ -90,7 +90,7 @@ impl CgroupManager {
             .ok_or_else(|| PolisError::Security("Cgroup não encontrado".to_string()))?;
 
         // This is a simplified implementation for demonstration
-        println!("🔧 Removendo processo {} do cgroup {}", pid, cgroup_name);
+        println!(" Removendo processo {} do cgroup {}", pid, cgroup_name);
         Ok(())
     }
 

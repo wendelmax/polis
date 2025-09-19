@@ -22,11 +22,11 @@ impl GrpcServer {
     }
 
     pub async fn start(&self, port: u16) -> Result<()> {
-        println!("🚀 Servidor gRPC iniciado em 0.0.0.0:{}", port);
+        println!(" Servidor gRPC iniciado em 0.0.0.0:{}", port);
 
         // In a real implementation, you would use tonic to generate the service
         // For now, we'll just simulate the server startup
-        println!("✅ Servidor gRPC configurado com sucesso");
+        println!(" Servidor gRPC configurado com sucesso");
 
         Ok(())
     }

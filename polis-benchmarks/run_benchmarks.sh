@@ -5,36 +5,36 @@
 
 set -e
 
-echo "🚀 Iniciando benchmarks do Polis..."
+echo " Iniciando benchmarks do Polis..."
 
 # Criar diretório para relatórios
 mkdir -p reports
 
 # Executar benchmarks individuais
-echo "📊 Executando benchmarks de containers..."
+echo " Executando benchmarks de containers..."
 cargo bench --bench container_benchmarks -- --output-format html --output reports/container_benchmarks.html
 
-echo "📊 Executando benchmarks de imagens..."
+echo " Executando benchmarks de imagens..."
 cargo bench --bench image_benchmarks -- --output-format html --output reports/image_benchmarks.html
 
-echo "📊 Executando benchmarks de APIs..."
+echo " Executando benchmarks de APIs..."
 cargo bench --bench api_benchmarks -- --output-format html --output reports/api_benchmarks.html
 
-echo "📊 Executando benchmarks de segurança..."
+echo " Executando benchmarks de segurança..."
 cargo bench --bench security_benchmarks -- --output-format html --output reports/security_benchmarks.html
 
-echo "📊 Executando benchmarks de rede..."
+echo " Executando benchmarks de rede..."
 cargo bench --bench network_benchmarks -- --output-format html --output reports/network_benchmarks.html
 
-echo "📊 Executando benchmarks de armazenamento..."
+echo " Executando benchmarks de armazenamento..."
 cargo bench --bench storage_benchmarks -- --output-format html --output reports/storage_benchmarks.html
 
 # Executar todos os benchmarks juntos para comparação
-echo "📊 Executando todos os benchmarks..."
+echo " Executando todos os benchmarks..."
 cargo bench -- --output-format html --output reports/all_benchmarks.html
 
 # Gerar relatório consolidado
-echo "📋 Gerando relatório consolidado..."
+echo "� Gerando relatório consolidado..."
 cat > reports/benchmark_summary.md << EOF
 # Relatório de Benchmarks - Polis
 
@@ -130,7 +130,7 @@ Com base nos resultados dos benchmarks, as seguintes otimizações são recomend
 *Versão do Polis: 0.1.0*
 EOF
 
-echo "✅ Benchmarks concluídos!"
-echo "📁 Relatórios disponíveis em: reports/"
-echo "🌐 Abra reports/benchmark_summary.md para visão geral"
-echo "📊 Abra os arquivos .html para detalhes específicos"
+echo " Benchmarks concluídos!"
+echo "� Relatórios disponíveis em: reports/"
+echo "� Abra reports/benchmark_summary.md para visão geral"
+echo " Abra os arquivos .html para detalhes específicos"

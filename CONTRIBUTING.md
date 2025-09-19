@@ -409,4 +409,4 @@ Thank you for contributing to Polis! Your contributions help make Polis better f
 
 ---
 
-**Happy Contributing!** 🚀
+**Happy Contributing!** 

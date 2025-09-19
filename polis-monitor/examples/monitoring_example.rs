@@ -8,16 +8,16 @@ use std::time::{SystemTime, UNIX_EPOCH};
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    println!("📊 Exemplo do Sistema de Monitoramento do Polis");
+    println!(" Exemplo do Sistema de Monitoramento do Polis");
     println!("==============================================\n");
 
     // 1. Coleta de Métricas
-    println!("1. 📊 Coletando Métricas do Sistema...");
+    println!("1.  Coletando Métricas do Sistema...");
     let mut metrics_collector = MetricsCollector::new(60);
 
     // Coletar métricas do sistema
     let _system_metrics = metrics_collector.collect_system_metrics().await?;
-    println!("   ✅ Métricas do sistema coletadas");
+    println!("    Métricas do sistema coletadas");
 
     // Coletar métricas de containers
     metrics_collector
@@ -33,18 +33,18 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Obter resumo das métricas
     let metrics_summary = metrics_collector.get_metrics_summary().await?;
     println!(
-        "   📊 Resumo: {} containers totais, {} rodando",
+        "    Resumo: {} containers totais, {} rodando",
         metrics_summary.total_containers, metrics_summary.running_containers
     );
 
     // 2. Health Checks
-    println!("\n2. 🏥 Executando Health Checks...");
+    println!("\n2.  Executando Health Checks...");
     let health_checker = HealthChecker::new();
 
     // Health check do sistema
     let system_health = health_checker.check_system_health().await?;
     println!(
-        "   🏥 Status geral do sistema: {:?}",
+        "    Status geral do sistema: {:?}",
         system_health.overall_status
     );
 
@@ -55,14 +55,14 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Resumo de health
     let health_summary = health_checker.get_system_health_summary().await?;
     println!(
-        "   📊 Health Summary: {} checks saudáveis, {} degradados, {} não saudáveis",
+        "    Health Summary: {} checks saudáveis, {} degradados, {} não saudáveis",
         health_summary.healthy_checks,
         health_summary.degraded_checks,
         health_summary.unhealthy_checks
     );
 
     // 3. Sistema de Alertas
-    println!("\n3. 🚨 Configurando Sistema de Alertas...");
+    println!("\n3. � Configurando Sistema de Alertas...");
     let mut alert_manager = AlertManager::new();
 
     // Criar regras de alerta
@@ -116,17 +116,17 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     test_metrics.insert("container_count".to_string(), 5.0);
 
     let triggered_alerts = alert_manager.evaluate_rules(&test_metrics).await?;
-    println!("   🚨 {} alertas disparados", triggered_alerts.len());
+    println!("   � {} alertas disparados", triggered_alerts.len());
 
     // Resumo de alertas
     let alert_summary = alert_manager.get_alert_summary().await?;
     println!(
-        "   📊 Alertas: {} ativos, {} críticos, {} altos",
+        "    Alertas: {} ativos, {} críticos, {} altos",
         alert_summary.active_alerts, alert_summary.critical_alerts, alert_summary.high_alerts
     );
 
     // 4. Dashboard
-    println!("\n4. 📊 Configurando Dashboard...");
+    println!("\n4.  Configurando Dashboard...");
     let mut dashboard_manager = DashboardManager::new();
 
     // Criar dashboard personalizado
@@ -162,7 +162,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .get_dashboard_data(&custom_dashboard_id)
         .await?;
     println!(
-        "   📊 Dashboard '{}' com {} widgets",
+        "    Dashboard '{}' com {} widgets",
         custom_dashboard_id,
         dashboard_data.widgets_data.len()
     );
@@ -170,12 +170,12 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Resumo de dashboards
     let dashboard_summary = dashboard_manager.get_dashboard_summary().await?;
     println!(
-        "   📊 Total: {} dashboards, {} widgets",
+        "    Total: {} dashboards, {} widgets",
         dashboard_summary.total_dashboards, dashboard_summary.total_widgets
     );
 
     // 5. Sistema de Logs
-    println!("\n5. 📝 Configurando Sistema de Logs...");
+    println!("\n5.  Configurando Sistema de Logs...");
     let mut log_manager = LogManager::new(1000);
 
     // Adicionar logs
@@ -226,18 +226,18 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     // Consultar logs
     let recent_logs = log_manager.get_recent_logs(5).await?;
-    println!("   📝 {} logs recentes consultados", recent_logs.len());
+    println!("    {} logs recentes consultados", recent_logs.len());
 
     // Estatísticas de logs
     let log_stats = log_manager.get_log_stats().await?;
     println!(
-        "   📊 Logs: {} totais, {} por nível",
+        "    Logs: {} totais, {} por nível",
         log_stats.total_entries,
         log_stats.entries_by_level.len()
     );
 
     // 6. Exportação de Métricas
-    println!("\n6. 📤 Configurando Exportação de Métricas...");
+    println!("\n6. � Configurando Exportação de Métricas...");
 
     // Configurar exportador JSON
     let json_config = ExportConfig {
@@ -275,7 +275,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Exportar em diferentes formatos
     let json_result = json_exporter.export_metrics(&export_data).await?;
     println!(
-        "   📤 Exportação JSON: {} registros em {}ms",
+        "   � Exportação JSON: {} registros em {}ms",
         json_result.records_exported, json_result.duration_ms
     );
 
@@ -291,28 +291,28 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     let prometheus_result = prometheus_exporter.export_metrics(&export_data).await?;
     println!(
-        "   📈 Exportação Prometheus: {} registros em {}ms",
+        "    Exportação Prometheus: {} registros em {}ms",
         prometheus_result.records_exported, prometheus_result.duration_ms
     );
 
     // Estatísticas de exportação
     let export_stats = json_exporter.get_export_stats().await?;
     println!(
-        "   📊 Exportações: {} totais, {} bem-sucedidas",
+        "    Exportações: {} totais, {} bem-sucedidas",
         export_stats.total_exports, export_stats.successful_exports
     );
 
     // 7. Resumo Final
-    println!("\n7. 📋 Resumo do Sistema de Monitoramento...");
-    println!("   ✅ Coleta de métricas funcionando");
-    println!("   ✅ Health checks implementados");
-    println!("   ✅ Sistema de alertas configurado");
-    println!("   ✅ Dashboard com widgets funcionais");
-    println!("   ✅ Sistema de logs estruturado");
-    println!("   ✅ Exportação de métricas em múltiplos formatos");
+    println!("\n7. � Resumo do Sistema de Monitoramento...");
+    println!("    Coleta de métricas funcionando");
+    println!("    Health checks implementados");
+    println!("    Sistema de alertas configurado");
+    println!("    Dashboard com widgets funcionais");
+    println!("    Sistema de logs estruturado");
+    println!("    Exportação de métricas em múltiplos formatos");
 
-    println!("\n🎉 Sistema de Monitoramento do Polis implementado com sucesso!");
-    println!("\n📊 Recursos de Monitoramento Implementados:");
+    println!("\n Sistema de Monitoramento do Polis implementado com sucesso!");
+    println!("\n Recursos de Monitoramento Implementados:");
     println!("   - Coleta de métricas de sistema e containers");
     println!("   - Health checks personalizáveis");
     println!("   - Sistema de alertas com regras e notificações");

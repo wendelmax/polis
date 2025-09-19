@@ -114,7 +114,7 @@ impl AlertManager {
         };
 
         self.rules.insert(rule_id.clone(), rule);
-        println!("🚨 Regra de alerta criada: {} ({})", name, rule_id);
+        println!("� Regra de alerta criada: {} ({})", name, rule_id);
 
         Ok(rule_id)
     }
@@ -135,7 +135,7 @@ impl AlertManager {
         };
 
         self.channels.insert(id.to_string(), channel);
-        println!("📢 Canal de notificação criado: {} ({})", name, id);
+        println!("� Canal de notificação criado: {} ({})", name, id);
 
         Ok(())
     }
@@ -228,7 +228,7 @@ impl AlertManager {
         // Send notifications
         self.send_notifications(&alert).await?;
 
-        println!("🚨 Alerta criado: {} ({})", title, alert_id);
+        println!("� Alerta criado: {} ({})", title, alert_id);
 
         Ok(alert_id)
     }
@@ -244,7 +244,7 @@ impl AlertManager {
             alert.resolved_at = Some(current_time);
             alert.updated_at = current_time;
 
-            println!("✅ Alerta resolvido: {}", alert_id);
+            println!(" Alerta resolvido: {}", alert_id);
         } else {
             return Err(PolisError::Api(format!(
                 "Alerta '{}' não encontrado",
@@ -265,7 +265,7 @@ impl AlertManager {
             alert.status = AlertStatus::Acknowledged;
             alert.updated_at = current_time;
 
-            println!("👁️ Alerta reconhecido: {}", alert_id);
+            println!("� Alerta reconhecido: {}", alert_id);
         } else {
             return Err(PolisError::Api(format!(
                 "Alerta '{}' não encontrado",
@@ -394,13 +394,13 @@ impl AlertManager {
             match channel.channel_type {
                 NotificationType::Console => {
                     println!(
-                        "🚨 NOTIFICAÇÃO: {} - {} ({:?})",
+                        "� NOTIFICAÇÃO: {} - {} ({:?})",
                         alert.title, alert.description, alert.severity
                     );
                 }
                 NotificationType::Email => {
                     println!(
-                        "📧 Email enviado para: {} - {}",
+                        "� Email enviado para: {} - {}",
                         channel
                             .config
                             .get("email")
@@ -410,7 +410,7 @@ impl AlertManager {
                 }
                 NotificationType::Slack => {
                     println!(
-                        "💬 Slack enviado para: {} - {}",
+                        "� Slack enviado para: {} - {}",
                         channel
                             .config
                             .get("webhook")
@@ -420,7 +420,7 @@ impl AlertManager {
                 }
                 NotificationType::Webhook => {
                     println!(
-                        "🔗 Webhook enviado para: {} - {}",
+                        "� Webhook enviado para: {} - {}",
                         channel.config.get("url").unwrap_or(&"unknown".to_string()),
                         alert.title
                     );

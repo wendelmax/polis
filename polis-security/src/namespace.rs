@@ -52,7 +52,7 @@ impl NamespaceManager {
         };
 
         self.namespaces.push(namespace_info.clone());
-        println!("🔧 Namespace {:?} criado (simulado)", namespace_type_clone);
+        println!(" Namespace {:?} criado (simulado)", namespace_type_clone);
         Ok(namespace_info)
     }
 
@@ -67,7 +67,7 @@ impl NamespaceManager {
             )));
         }
 
-        println!("🔧 Entrando no namespace: {}", namespace_path);
+        println!(" Entrando no namespace: {}", namespace_path);
         Ok(())
     }
 
@@ -92,7 +92,7 @@ impl NamespaceManager {
                 Ok(ns_info) => created_namespaces.push(ns_info),
                 Err(e) => {
                     println!(
-                        "⚠️  Aviso: Não foi possível criar namespace {:?}: {}",
+                        "⚠  Aviso: Não foi possível criar namespace {:?}: {}",
                         ns_type, e
                     );
                 }
@@ -117,7 +117,7 @@ impl NamespaceManager {
     pub async fn setup_hostname(&self, hostname: &str) -> Result<()> {
         // This is a simplified implementation for demonstration
         // In a real implementation, you would use sethostname() system call
-        println!("🔧 Configurando hostname: {}", hostname);
+        println!(" Configurando hostname: {}", hostname);
         Ok(())
     }
 }

@@ -20,7 +20,8 @@ fn rest_api_benchmark(c: &mut Criterion) {
 
         let image_cache_dir = config.storage.root_dir.join("images");
         let image_manager = Arc::new(ImageManager::new(image_cache_dir));
-        let auth_manager = Arc::new(RwLock::new(AuthManager::new("test-secret".to_string())));
+        let jwt_secret = std::env::var("JWT_SECRET").unwrap_or_else(|_| "test-secret".to_string());
+        let auth_manager = Arc::new(RwLock::new(AuthManager::new(jwt_secret)));
 
         let rest_server = RestServer::new(runtime, image_manager, auth_manager);
 
@@ -90,7 +91,8 @@ fn grpc_api_benchmark(c: &mut Criterion) {
 
         let image_cache_dir = config.storage.root_dir.join("images");
         let image_manager = Arc::new(ImageManager::new(image_cache_dir));
-        let auth_manager = Arc::new(RwLock::new(AuthManager::new("test-secret".to_string())));
+        let jwt_secret = std::env::var("JWT_SECRET").unwrap_or_else(|_| "test-secret".to_string());
+        let auth_manager = Arc::new(RwLock::new(AuthManager::new(jwt_secret)));
 
         let grpc_server = GrpcServer::new(runtime, image_manager, auth_manager);
 
@@ -109,7 +111,8 @@ fn authentication_benchmark(c: &mut Criterion) {
     let rt = Runtime::new().unwrap();
 
     rt.block_on(async {
-        let mut auth_manager = AuthManager::new("test-secret".to_string());
+        let jwt_secret = std::env::var("JWT_SECRET").unwrap_or_else(|_| "test-secret".to_string());
+        let mut auth_manager = AuthManager::new(jwt_secret);
 
         let mut group = c.benchmark_group("authentication");
 
@@ -117,7 +120,7 @@ fn authentication_benchmark(c: &mut Criterion) {
         group.bench_function("create_user", |b| {
             b.to_async(&rt).iter(|| async {
                 let username = format!("user-{}", uuid::Uuid::new_v4());
-                let password = "password123".to_string();
+                let password = std::env::var("TEST_PASSWORD").unwrap_or_else(|_| "password123".to_string());
                 auth_manager
                     .user_manager
                     .create_user(username, password)
@@ -129,7 +132,7 @@ fn authentication_benchmark(c: &mut Criterion) {
         group.bench_function("authenticate_user", |b| {
             b.to_async(&rt).iter(|| async {
                 let username = "testuser".to_string();
-                let password = "password123".to_string();
+                let password = std::env::var("TEST_PASSWORD").unwrap_or_else(|_| "password123".to_string());
 
                 // Create user first
                 let _ = auth_manager
@@ -146,7 +149,7 @@ fn authentication_benchmark(c: &mut Criterion) {
         group.bench_function("generate_token", |b| {
             b.to_async(&rt).iter(|| async {
                 let username = "testuser".to_string();
-                let password = "password123".to_string();
+                let password = std::env::var("TEST_PASSWORD").unwrap_or_else(|_| "password123".to_string());
 
                 // Create user first
                 let _ = auth_manager
@@ -163,7 +166,7 @@ fn authentication_benchmark(c: &mut Criterion) {
         group.bench_function("validate_token", |b| {
             b.to_async(&rt).iter(|| async {
                 let username = "testuser".to_string();
-                let password = "password123".to_string();
+                let password = std::env::var("TEST_PASSWORD").unwrap_or_else(|_| "password123".to_string());
 
                 // Create user and get token
                 let _ = auth_manager
@@ -194,7 +197,8 @@ fn concurrent_api_requests_benchmark(c: &mut Criterion) {
 
         let image_cache_dir = config.storage.root_dir.join("images");
         let image_manager = Arc::new(ImageManager::new(image_cache_dir));
-        let auth_manager = Arc::new(RwLock::new(AuthManager::new("test-secret".to_string())));
+        let jwt_secret = std::env::var("JWT_SECRET").unwrap_or_else(|_| "test-secret".to_string());
+        let auth_manager = Arc::new(RwLock::new(AuthManager::new(jwt_secret)));
 
         let rest_server = RestServer::new(runtime, image_manager, auth_manager);
 

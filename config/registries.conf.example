@@ -1,0 +1,55 @@
+# Polis Registry Configuration
+# This file configures which container registries Polis can use
+
+# Unqualified search registries (searched when no registry is specified)
+unqualified_search_registries = [
+    "docker.io",
+    "quay.io", 
+    "registry.redhat.io"
+]
+
+# Registry configurations
+[registries.docker.io]
+location = "https://registry-1.docker.io"
+mirror = "https://mirror.gcr.io"  # Mirror to avoid rate limits
+insecure = false
+blocked = false
+
+[registries.quay.io]
+location = "https://quay.io"
+mirror = null
+insecure = false
+blocked = false
+
+[registries.registry.redhat.io]
+location = "https://registry.redhat.io"
+mirror = null
+insecure = false
+blocked = false
+
+[registries.gcr.io]
+location = "https://gcr.io"
+mirror = null
+insecure = false
+blocked = false
+
+# Example: Custom registry
+[registries.my-registry.com]
+location = "https://my-registry.com"
+mirror = "https://mirror.my-registry.com"
+insecure = false
+blocked = false
+
+# Example: Insecure registry (for testing)
+[registries.localhost:5000]
+location = "http://localhost:5000"
+mirror = null
+insecure = true
+blocked = false
+
+# Example: Blocked registry
+[registries.blocked-registry.com]
+location = "https://blocked-registry.com"
+mirror = null
+insecure = false
+blocked = true

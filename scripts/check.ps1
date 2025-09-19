@@ -5,7 +5,7 @@ param(
     [switch]$SkipDependencies
 )
 
-Write-Host "🔍 Polis CI Check Script (Windows)" -ForegroundColor Blue
+Write-Host " Polis CI Check Script (Windows)" -ForegroundColor Blue
 Write-Host "====================================" -ForegroundColor Blue
 
 # Function to print colored output
