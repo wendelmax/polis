@@ -54,7 +54,7 @@ oci-spec = "0.8"
 tar = "0.4"
 flate2 = "1.0"
 sha2 = "0.10"
-base64 = "0.21"
+base64 = "0.22"
 url = "2.4"
 reqwest = { version = "0.12", features = ["json"] }
 tempfile = "3.8"
