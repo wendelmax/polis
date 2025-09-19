@@ -65,7 +65,7 @@ rand = "0.8"
 
 # Development dependencies
 [workspace.dependencies.criterion]
-version = "0.5"
+version = "0.7"
 features = ["html_reports"]
 
 [workspace.dependencies.cargo-llvm-cov]
