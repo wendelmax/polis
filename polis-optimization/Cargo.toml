@@ -50,5 +50,5 @@ async-trait = "0.1"
 tokio-util = "0.7"
 
 # Memory profiling
-heaptrack = "0.1"
+heaptrack = "0.4"
 flamegraph = "0.6"
