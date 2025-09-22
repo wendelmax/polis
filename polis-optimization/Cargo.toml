@@ -34,7 +34,7 @@ procfs = "0.18"
 perf-event = "0.4"
 
 # Caching and optimization
-lru = "0.12"
+lru = "0.16"
 dashmap = "6.1"
 arc-swap = "1.6"
 crossbeam = "0.8"
