@@ -28,7 +28,7 @@ regex = "1.10"
 
 # Dockerfile parsing
 nom = "7.1"
-thiserror = "1.0"
+thiserror = "2.0"
 anyhow = "1.0"
 
 # Async and error handling
