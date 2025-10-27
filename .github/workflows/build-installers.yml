@@ -47,7 +47,7 @@ jobs:
         tar -czf polis-linux-${{ matrix.target == 'x86_64-unknown-linux-gnu' && 'x86_64' || 'aarch64' }}.tar.gz polis-linux-${{ matrix.target == 'x86_64-unknown-linux-gnu' && 'x86_64' || 'aarch64' }}/
     
     - name: Upload artifact
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v5
       with:
         name: polis-linux-${{ matrix.target == 'x86_64-unknown-linux-gnu' && 'x86_64' || 'aarch64' }}
         path: polis-linux-${{ matrix.target == 'x86_64-unknown-linux-gnu' && 'x86_64' || 'aarch64' }}.tar.gz
@@ -79,7 +79,7 @@ jobs:
         tar -czf polis-macos-${{ matrix.target == 'x86_64-apple-darwin' && 'x86_64' || 'aarch64' }}.tar.gz polis-macos-${{ matrix.target == 'x86_64-apple-darwin' && 'x86_64' || 'aarch64' }}/
     
     - name: Upload artifact
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v5
       with:
         name: polis-macos-${{ matrix.target == 'x86_64-apple-darwin' && 'x86_64' || 'aarch64' }}
         path: polis-macos-${{ matrix.target == 'x86_64-apple-darwin' && 'x86_64' || 'aarch64' }}.tar.gz
@@ -115,7 +115,7 @@ jobs:
         Compress-Archive -Path polis-windows-x86_64 -DestinationPath polis-windows-x86_64.zip
     
     - name: Upload artifact
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v5
       with:
         name: polis-windows-x86_64
         path: polis-windows-x86_64.zip
