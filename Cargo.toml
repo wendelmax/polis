@@ -61,7 +61,7 @@ url = "2.4"
 reqwest = { version = "0.12", features = ["json"] }
 tempfile = "3.8"
 walkdir = "2.4"
-jsonwebtoken = "9.2"
+jsonwebtoken = "10.2"
 argon2 = "0.5"
 rand = "0.9"
 getrandom = "0.3"
