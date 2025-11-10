@@ -1,5 +1,5 @@
 # Multi-stage Dockerfile for Polis
-FROM rust:1.90 as builder
+FROM rust:1.91 as builder
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
