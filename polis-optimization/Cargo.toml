@@ -40,7 +40,7 @@ arc-swap = "1.6"
 crossbeam = "0.8"
 
 # Compression and serialization
-bincode = "2.0"
+bincode = "3.0"
 zstd = "0.13"
 lz4 = "1.24"
 
