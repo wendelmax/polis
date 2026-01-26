@@ -29,7 +29,7 @@ mimalloc = "0.1"
 tcmalloc = "0.3"
 
 # Performance monitoring
-sysinfo = "0.37"
+sysinfo = "0.38"
 procfs = "0.18"
 perf-event = "0.4"
 
