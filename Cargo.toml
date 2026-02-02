@@ -64,7 +64,7 @@ walkdir = "2.4"
 jsonwebtoken = "10.2"
 argon2 = "0.5"
 rand = "0.9"
-getrandom = "0.3"
+getrandom = "0.4"
 
 # Development dependencies
 [workspace.dependencies.criterion]
